@@ -1,5 +1,5 @@
 import { useState } from 'react'
-// import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Radio from '../elements/Radio'
 import TextInput from '../elements/TextInput'
 
@@ -8,8 +8,9 @@ const LoginForm = () => {
   const [password, setPassword] = useState('')
   const [purpose, setPurpose] = useState('compete')
   const [error, setError] = useState(false)
-  // const history = useHistory()
+  const history = useHistory()
 
+  // handle user login submission - and go to the respective dashboard
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -22,12 +23,12 @@ const LoginForm = () => {
 
     if (response.ok) {
       const data = await response.json()
-      console.log(data)
-      console.log(purpose)
-      localStorage.setItem('user', JSON.stringify(data))
-      // history.push(`/dashboard/${purpose}`)
+      localStorage.setItem('user', JSON.stringify(data.user))
+      if (purpose === 'organise') {
+        history.push(`/${purpose}`)
+      }
+      // need to write one tof
     } else {
-      console.log('wrong password')
       setError(true)
     }
   }

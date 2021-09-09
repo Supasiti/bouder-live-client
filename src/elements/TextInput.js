@@ -8,7 +8,6 @@ const TextInput = (props) => {
   const [data, setData] = useState('')
   const borderColor = isError ? 'border-red-400' : 'border-gray-400'
 
-  console.log('being rendered')
   const handleOnChange = (e) => {
     const newValue = e.target.value
     setData(newValue)
