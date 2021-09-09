@@ -2,6 +2,7 @@
 const Radio = (props) => {
   const { name } = 'name' in props && props
   const { value } = 'value' in props && props
+  const { isChecked } = 'isChecked' in props && props
 
   const handleClicked = (e) => props.onClick(e.target.value)
 
@@ -18,6 +19,7 @@ const Radio = (props) => {
         focus:ring-yellow-500 focus:border-yellow-500
         focus:text-yellow-500 focus-visible:text-yellow-500"
         onClick={handleClicked}
+        defaultChecked={JSON.parse(isChecked) || false}
       />
       <label htmlFor={`radio-${value}`} className="px-2 text-gray-400">
         {value}
