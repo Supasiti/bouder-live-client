@@ -37,4 +37,7 @@
     hover:bg-gray-200 focus:outline-none focus:shadow-inner 
     focus:bg-gray-200;
   }
+  .card {
+    @apply shadow-xl rounded-2xl
+  }
 }

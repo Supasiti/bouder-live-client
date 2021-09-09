@@ -1,8 +1,8 @@
 import utils from '../utils'
 
 const TextInput = (props) => {
-  const { name } = 'name' in props ? props : null
-  const { placeholder } = 'placeholder' in props ? props : ''
+  const { name } = 'name' in props && props
+  const { placeholder } = 'placeholder' in props && props
 
   return (
     <div className="w-full">
