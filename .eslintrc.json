@@ -9,13 +9,17 @@
     "sourceType": "module"
   },
 
-  "plugins": ["prettier"],
+  "plugins": ["react", "prettier", "react-hooks"],
   "extends": [
-    "airbnb-base",
-    "plugin:prettier/recommended"
+    "airbnb", 
+    "prettier", 
+    "prettier/react",
+    "@imaginary-cloud/react"
   ],
   "rules": {
     // Allow Prettier to throw errors via ESLint
-    "prettier/prettier": "error"
+    "prettier/prettier": "error", 
+    "react/jsx-uses-react": "off", // for modern React webhook versions 
+    "react/react-in-jsx-scope": "off" // for modern React webhook versions 
   }
 }
