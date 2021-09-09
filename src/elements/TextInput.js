@@ -1,8 +1,19 @@
+/* eslint-disable react/prop-types */
+import { useState } from 'react'
 import utils from '../utils'
 
 const TextInput = (props) => {
+  const { type } = 'type' in props && props
   const { name } = 'name' in props && props
   const { placeholder } = 'placeholder' in props && props
+
+  const [data, setData] = useState('')
+
+  const handleOnChange = (e) => {
+    const newValue = e.target.value
+    setData(newValue)
+    props.onDataChange(newValue)
+  }
 
   return (
     <div className="w-full">
@@ -14,7 +25,7 @@ const TextInput = (props) => {
         {utils.capitalize(name)}
       </label>
       <input
-        type="text"
+        type={type}
         id={`${name}-input`}
         name={name}
         className="w-full rounded-lg p-2 shadow-md
@@ -24,6 +35,8 @@ const TextInput = (props) => {
         placeholder={placeholder}
         aria-label={name}
         aria-describedby={`${name}-label`}
+        value={data}
+        onChange={handleOnChange}
       />
     </div>
   )

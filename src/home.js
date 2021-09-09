@@ -2,7 +2,10 @@ import Hero from './components/Hero'
 import LoginCard from './components/LoginCard'
 
 const Home = () => (
-  <div className="flex flex-wrap justify-center lg:max-w-5xl  xl:max-w-7xl mx-auto">
+  <div
+    className="flex flex-wrap justify-center lg:max-w-5xl xl:max-w-7xl 
+      mx-auto"
+  >
     <div className="max-w-sm md:w-1/2">
       <Hero />
     </div>
