@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  [type='text'],
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  textarea,select {
+    @apply rounded-lg;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-block px-5 py-2 rounded-full;
+  }
+  .btn-primary {
+    @apply shadow-lg bg-gradient-to-br from-yellow-500 to-yellow-600
+  text-gray-200
+    hover:-translate-y-0.5 transform transition
+  focus:bg-yellow-700 focus:ring focus:ring-yellow-600
+    focus:ring-offset-1 focus:outline-none;
+  }
+  .btn-secondary {
+    @apply bg-gray-300 text-gray-800 font-bold
+    hover:bg-gray-200 focus:outline-none focus:shadow-inner 
+    focus:bg-gray-200;
+  }
+  .card {
+    @apply shadow-xl rounded-2xl
+  }
+}

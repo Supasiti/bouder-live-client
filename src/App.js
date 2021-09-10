@@ -1,8 +1,19 @@
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Home from './Home'
+import Organise from './Organise'
+import EditEvent from './EditEvent'
+
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-3xl text-gray-600 text-center"> Hello world </h1>
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/organise" component={Organise} />
+          <Route path="/o/events/:id" component={EditEvent} />
+        </Switch>
+      </div>
+    </Router>
   )
 }
 
