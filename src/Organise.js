@@ -21,7 +21,26 @@ const Organise = () => {
       </h2>
       {isLoading && <p>LOADING .... </p>}
       {error && <p>{error}</p>}
-      <EventTable title="Your Running Events" events={events || []} />
+      <EventTable
+        title="Your Running Events"
+        events={(events && events.filter((e) => e.status === 'running')) || []}
+      />
+      <EventTable
+        title="Your Future Events"
+        events={
+          (events &&
+            events.filter((e) => ['open', 'pending'].includes(e.status))) ||
+          []
+        }
+      />
+      <EventTable
+        title="Your Past Events"
+        events={
+          (events &&
+            events.filter((e) => ['cancelled', 'ended'].includes(e.status))) ||
+          []
+        }
+      />
     </div>
   )
 }
