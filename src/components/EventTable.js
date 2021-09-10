@@ -13,6 +13,7 @@ const EventTable = (props) => {
             location={e.location}
             status={e.status}
             key={e.id}
+            eventId={e.id}
           />
         ))}
       </div>
