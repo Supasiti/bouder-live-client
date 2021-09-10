@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-import utils from '../utils'
+import utils from '../utils/string'
 
 const TextInput = (props) => {
-  const { type, name, placeholder, isError } = props
-
-  const [data, setData] = useState('')
+  const { type, name, placeholder, isError, value } = props
+  const [data, setData] = useState(value)
   const borderColor = isError ? 'border-red-400' : 'border-gray-400'
 
   const handleOnChange = (e) => {

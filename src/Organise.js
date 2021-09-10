@@ -6,8 +6,11 @@ const Organise = () => {
   const [user, setUser] = useState(null)
   const savedUser = JSON.parse(localStorage.getItem('user'))
   const userId = savedUser.id
-  const fetchPromise = () => fetch(`api/events?organised_by=${userId}`)
-  const { data: events, isLoading, error } = useFetch(fetchPromise)
+  const {
+    data: events,
+    isLoading,
+    error,
+  } = useFetch(`api/events?organised_by=${userId}`)
 
   useEffect(() => {
     setUser(savedUser)

@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react'
 
 // custom hook that use a fetch promise
 // return  {data, isLoading, error}
-const useFetch = (fetchPromise) => {
+const useFetch = (url) => {
   const [data, setData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetchPromise()
+        const res = await fetch(url)
         if (res.ok) {
           const newData = await res.json()
           setData(newData)
@@ -25,8 +25,8 @@ const useFetch = (fetchPromise) => {
       }
     }
 
-    fetch()
-  }, [])
+    fetchData()
+  }, [url])
 
   return { data, isLoading, error }
 }
