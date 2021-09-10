@@ -33,6 +33,7 @@ const LoginForm = () => {
     }
   }
 
+  // handle all the value changes
   const handleEmailChange = (newEmail) => setEmail(newEmail)
   const handlePasswordChange = (newPassword) => {
     setPassword(newPassword)
