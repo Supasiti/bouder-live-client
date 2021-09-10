@@ -6,14 +6,16 @@ const EventTable = (props) => {
   return (
     <div className="mb-5">
       <h3 className="text-2xl font-bold mb-5">{title}</h3>
-      {events.map((e) => (
-        <EventCard
-          name={e.name}
-          location={e.location}
-          status={e.status}
-          key={e.id}
-        />
-      ))}
+      <div className="md:flex md:justify-around">
+        {events.map((e) => (
+          <EventCard
+            name={e.name}
+            location={e.location}
+            status={e.status}
+            key={e.id}
+          />
+        ))}
+      </div>
     </div>
   )
 }

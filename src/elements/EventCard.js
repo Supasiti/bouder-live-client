@@ -6,18 +6,28 @@ const EventCard = (props) => {
   const { name, location, status } = props
 
   return (
-    <Card color="greyLight" extraClasses="relative">
-      <div className="flex">
-        <div className="w-32 h-32 bg-gray-600 rounded-l-2xl"></div>
-        <div className="p-4">
-          <h4 className="text-yellow-600 text-lg font-bold">{name}</h4>
-          <p>{location}</p>
+    <div className="max-w-md mx-auto md:w-80 md:h-96">
+      <Card color="greyLight" extraClasses="relative">
+        <div className="flex md:flex-col">
+          {/* image */}
+          <div
+            className="w-32 h-32 bg-gray-600 rounded-l-2xl
+              md:w-72 md:h-72 md:rounded-lg md:mx-auto md:mt-4"
+          ></div>
+
+          {/* captions */}
+          <div className="p-4">
+            <h4 className="text-yellow-600 text-lg font-bold">{name}</h4>
+            <p>{location}</p>
+          </div>
         </div>
-      </div>
-      <div className="absolute -top-2.5 -right-2.5">
-        <Status status={status} />
-      </div>
-    </Card>
+
+        {/* status */}
+        <div className="absolute -top-2.5 -right-2.5">
+          <Status status={status} />
+        </div>
+      </Card>
+    </div>
   )
 }
 
