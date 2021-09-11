@@ -18,26 +18,50 @@ const CategoryForm = (props) => {
     setError(false)
   }
 
-  console.log(eventId)
+  // handle form submission
+  const handleFormSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const categoryData = { ...category, eventId }
+      const res = await fetch('/api/categories', {
+        method: 'POST',
+        body: JSON.stringify(categoryData),
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      if (!res.ok) {
+        throw new Error('fail to save new category')
+      }
+      const data = await res.json()
+      console.log(data)
+      // need to render the page
+    } catch (err) {
+      setError(true)
+    }
+  }
+
   return (
-    <Card color="grayLight" extraClasses="flex justify-between items-stretch">
-      <LeftCell width="w-12" />
-      <div className="w-1/2 px-4 py-2 flex-grow">
-        <TextInput
-          type="text"
-          name="category-name"
-          label="name"
-          placeholder="Category Name"
-          onDataChange={handleValueChange}
-          isError={error}
-        />
-      </div>
-      <RightCell width="w-24">
-        <RoundButton type="submit">
-          <i className="far fa-save text-2xl"></i>
-        </RoundButton>
-      </RightCell>
-    </Card>
+    <form onSubmit={handleFormSubmit}>
+      <Card color="grayLight" extraClasses="flex justify-between items-stretch">
+        <LeftCell width="w-12" />
+        <div className="w-1/2 px-4 py-2 flex-grow">
+          <TextInput
+            type="text"
+            name="name"
+            idName="category-name"
+            label="name"
+            placeholder="Category Name"
+            onDataChange={handleValueChange}
+            isError={error}
+          />
+        </div>
+        <RightCell width="w-24">
+          <RoundButton type="submit">
+            <i className="far fa-save text-2xl"></i>
+          </RoundButton>
+        </RightCell>
+      </Card>
+    </form>
   )
 }
 
