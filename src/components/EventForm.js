@@ -13,6 +13,7 @@ const EventForm = (props) => {
   const [status, setStatus] = useState('pending')
   const [error, setError] = useState(false)
 
+  // update the when event data changes
   useEffect(() => {
     setName(props.event.name)
     setLocation(props.event.location)
@@ -25,21 +26,17 @@ const EventForm = (props) => {
 
     const newEventData = { name, location, status }
     try {
-      const res = fetch(`/api/events/${eventId}`, {
+      const res = await fetch(`/api/events/${eventId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newEventData),
       })
-      if (res.ok) {
-        const data = await res.json()
-        console.log(data)
-
-        // clear form
-        return
+      if (!res.ok) {
+        throw new Error('cannot update the event data')
       }
-      throw new Error('cannot update the event data')
+      // need to some way to display that it has been updated
     } catch (err) {
-      setError(err.message)
+      setError(true)
     }
   }
 
