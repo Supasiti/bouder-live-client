@@ -9,6 +9,10 @@ const EditEvent = () => {
   const { eventId } = useParams()
   const { data: eventData } = useFetch(`/api/events/${eventId}`)
 
+  //
+  //
+  //  Need to arrange elements
+  //
   return (
     <Container>
       <h2 className="text-center text-5xl text-yellow-600 mt-2 mb-6">
@@ -20,7 +24,7 @@ const EditEvent = () => {
         </Card>
       </div>
 
-      <div className="w-2/3 m-auto mb-4">
+      <div className="w-full m-auto mb-4">
         <Card color="grayLight" extraClasses="p-4">
           <CategoryList
             categories={eventData && eventData.categories}

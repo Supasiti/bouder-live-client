@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types'
 import TextInput from '../elements/TextInput'
 import Card from '../elements/Card'
 import LeftCell from '../elements/LeftCell'
+import RoundButton from '../elements/RoundButton'
+import RightCell from '../elements/RightCell'
 
 const CategoryForm = (props) => {
   const { eventId } = props
@@ -29,7 +31,11 @@ const CategoryForm = (props) => {
           isError={error}
         />
       </div>
-      <div className="w-24 flex">{/* to put delete button here */}</div>
+      <RightCell width="w-24">
+        <RoundButton type="submit">
+          <i className="far fa-save text-2xl"></i>
+        </RoundButton>
+      </RightCell>
     </Card>
   )
 }
