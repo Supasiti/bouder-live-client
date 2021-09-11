@@ -50,6 +50,7 @@ const LoginForm = () => {
       <TextInput
         type="email"
         name="email"
+        label="email"
         placeholder="akiyo@email.com"
         onDataChange={handleEmailChange}
         isError={error}
@@ -57,6 +58,7 @@ const LoginForm = () => {
       <TextInput
         type="password"
         name="password"
+        label="password"
         placeholder="password"
         onDataChange={handlePasswordChange}
         isError={error}

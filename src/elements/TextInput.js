@@ -3,7 +3,7 @@ import useUpdateState from '../hooks/useUpdateState'
 import utils from '../utils/string'
 
 const TextInput = (props) => {
-  const { type, name, placeholder, isError } = props
+  const { type, name, placeholder, isError, label } = props
   const { data, setData } = useUpdateState(props, 'value', '')
   const borderColor = isError ? 'border-red-400' : 'border-gray-400'
 
@@ -21,7 +21,7 @@ const TextInput = (props) => {
         id={`${name}-label`}
         htmlFor={`${name}-input`}
       >
-        {utils.capitalize(name)}
+        {utils.capitalize(label)}
       </label>
       <input
         type={type}
@@ -43,6 +43,7 @@ const TextInput = (props) => {
 TextInput.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   isError: PropTypes.bool.isRequired,
   onDataChange: PropTypes.func.isRequired,

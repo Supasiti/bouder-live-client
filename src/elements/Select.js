@@ -3,7 +3,7 @@ import useUpdateState from '../hooks/useUpdateState'
 import utils from '../utils/string'
 
 const Select = (props) => {
-  const { name, options } = props
+  const { name, options, label } = props
   const { data, setData } = useUpdateState(props, 'value', '')
 
   // handle when an option is selected
@@ -21,7 +21,7 @@ const Select = (props) => {
         className="w-full mb-1 text-sm text-gray-800"
         htmlFor={`${name}-select`}
       >
-        {utils.capitalize(name)}
+        {utils.capitalize(label)}
       </label>
 
       {/* select */}
@@ -48,6 +48,7 @@ const Select = (props) => {
 
 Select.propTypes = {
   name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
   onDataChange: PropTypes.func.isRequired,
 }

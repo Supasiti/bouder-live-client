@@ -25,7 +25,8 @@ const CategoryForm = (props) => {
       <div className="w-1/2 px-4 py-2 flex-grow">
         <TextInput
           type="text"
-          name="name"
+          name="category-name"
+          label="name"
           placeholder="Category Name"
           onDataChange={handleValueChange}
           isError={error}

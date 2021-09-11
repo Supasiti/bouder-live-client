@@ -43,6 +43,7 @@ const EventForm = (props) => {
       <TextInput
         type="text"
         name="name"
+        label="name"
         placeholder="Fun Bouldering Event"
         onDataChange={handleValueChange}
         isError={error}
@@ -51,6 +52,7 @@ const EventForm = (props) => {
       <TextInput
         type="text"
         name="location"
+        label="location"
         placeholder="Your Bouldering Gym"
         onDataChange={handleValueChange}
         isError={error}
@@ -59,6 +61,7 @@ const EventForm = (props) => {
       <Select
         options={statuses}
         name="status"
+        label="status"
         onDataChange={handleValueChange}
         value={event.status}
       />
