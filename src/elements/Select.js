@@ -1,17 +1,10 @@
 import { PropTypes } from 'prop-types'
-import { useEffect, useState } from 'react'
+import useUpdateState from '../hooks/useUpdateState'
 import utils from '../utils/string'
 
 const Select = (props) => {
   const { name, options } = props
-  const [data, setData] = useState('')
-
-  // looking to update every time props.value changes
-  useEffect(() => {
-    if (props.value) {
-      setData(props.value)
-    }
-  }, [props.value])
+  const { data, setData } = useUpdateState(props, 'value', '')
 
   // handle when an option is selected
   const handleSelectChange = (e) => {
@@ -56,7 +49,6 @@ const Select = (props) => {
 Select.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
-  value: PropTypes.string,
   onDataChange: PropTypes.func.isRequired,
 }
 export default Select

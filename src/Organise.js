@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import EventTable from './components/EventTable'
+import Container from './elements/Container'
 import useFetch from './hooks/useFetch'
 
 const Organise = () => {
@@ -17,7 +18,7 @@ const Organise = () => {
   }, [])
 
   return (
-    <div className="p-4">
+    <Container>
       <p className="text-center text-xl font-bold mt-8">Welcome back,</p>
       <h2 className="text-center text-5xl text-yellow-600 mt-2 mb-6">
         {user && user.username}
@@ -44,7 +45,7 @@ const Organise = () => {
           []
         }
       />
-    </div>
+    </Container>
   )
 }
 

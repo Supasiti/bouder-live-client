@@ -1,26 +1,34 @@
 import { useParams } from 'react-router-dom'
 import EventForm from './components/EventForm'
 import Card from './elements/Card'
+import Container from './elements/Container'
 import useFetch from './hooks/useFetch'
+import CategoryList from './components/CagetoryList'
 
 const EditEvent = () => {
   const { eventId } = useParams()
   const { data: eventData } = useFetch(`/api/events/${eventId}`)
 
   return (
-    <div className="p-4">
+    <Container>
       <h2 className="text-center text-5xl text-yellow-600 mt-2 mb-6">
         Your Event : {eventId}
       </h2>
-      <div className="w-96 m-auto">
+      <div className="w-96 m-auto mb-4">
         <Card color="grayLight" extraClasses="p-4">
-          <EventForm
+          <EventForm eventId={eventId} event={eventData && eventData.event} />
+        </Card>
+      </div>
+
+      <div className="w-2/3 m-auto mb-4">
+        <Card color="grayLight" extraClasses="p-4">
+          <CategoryList
+            categories={eventData && eventData.categories}
             eventId={eventId}
-            event={(eventData && eventData.event) || {}}
           />
         </Card>
       </div>
-    </div>
+    </Container>
   )
 }
 

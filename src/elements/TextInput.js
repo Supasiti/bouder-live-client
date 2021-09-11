@@ -1,18 +1,11 @@
 import { PropTypes } from 'prop-types'
-import { useState, useEffect } from 'react'
+import useUpdateState from '../hooks/useUpdateState'
 import utils from '../utils/string'
 
 const TextInput = (props) => {
   const { type, name, placeholder, isError } = props
-  const [data, setData] = useState('')
+  const { data, setData } = useUpdateState(props, 'value', '')
   const borderColor = isError ? 'border-red-400' : 'border-gray-400'
-
-  // looking to update every time props.value changes
-  useEffect(() => {
-    if (props.value) {
-      setData(props.value)
-    }
-  }, [props.value])
 
   // handle when input changes
   const handleOnChange = (e) => {
@@ -52,7 +45,6 @@ TextInput.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   isError: PropTypes.bool.isRequired,
-  value: PropTypes.string,
   onDataChange: PropTypes.func.isRequired,
 }
 export default TextInput

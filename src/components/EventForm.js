@@ -8,7 +8,6 @@ const statuses = ['pending', 'open', 'running', 'cancelled', 'ended']
 
 const EventForm = (props) => {
   const { eventId } = props
-
   const { data: event, setData: setEvent } = useUpdateState(props, 'event', {})
   const [error, setError] = useState(false)
 
@@ -40,7 +39,7 @@ const EventForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
-      <h2 className="text-lg text-center font-bold">Event Description</h2>
+      <h3 className="text-lg text-center font-bold">Event Description</h3>
       <TextInput
         type="text"
         name="name"
