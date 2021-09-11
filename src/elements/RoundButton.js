@@ -10,7 +10,7 @@ const RoundButton = (props) => {
   return (
     <button
       type={value}
-      className="inline-block w-12 h-12 rounded-full btn-primary"
+      className="inline-block w-10 h-10 rounded-full btn-primary"
       onClick={props.onClick}
     >
       {props.children}

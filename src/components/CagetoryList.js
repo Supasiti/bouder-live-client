@@ -5,7 +5,18 @@ import CategoryForm from './CategoryForm'
 
 const CategoryList = (props) => {
   const { eventId } = props
-  const { data: categories } = useUpdateState(props, 'categories', [])
+  const { data: categories, setData: setCategories } = useUpdateState(
+    props,
+    'categories',
+    [],
+  )
+
+  // handle when a category is deleted
+  const handleDelete = (categoryId) => {
+    const newCategories = categories.filter((c) => c.id !== categoryId)
+    console.log(newCategories)
+    setCategories(newCategories)
+  }
 
   return (
     <div>
@@ -13,7 +24,12 @@ const CategoryList = (props) => {
       <div className="space-y-3 mb-3">
         {categories &&
           categories.map((c) => (
-            <CategoryCard id={c.id} key={c.id} name={c.name} />
+            <CategoryCard
+              id={c.id}
+              key={c.id}
+              name={c.name}
+              onDelete={handleDelete}
+            />
           ))}
       </div>
 

@@ -4,7 +4,6 @@ import TextInput from '../elements/TextInput'
 import Card from '../elements/Card'
 import LeftCell from '../elements/LeftCell'
 import RoundButton from '../elements/RoundButton'
-import RightCell from '../elements/RightCell'
 
 const CategoryForm = (props) => {
   const { eventId } = props
@@ -32,9 +31,7 @@ const CategoryForm = (props) => {
       if (!res.ok) {
         throw new Error('fail to save new category')
       }
-      const data = await res.json()
-      console.log(data)
-      // need to render the page
+      window.location.reload()
     } catch (err) {
       setError(true)
     }
@@ -55,11 +52,11 @@ const CategoryForm = (props) => {
             isError={error}
           />
         </div>
-        <RightCell width="w-24">
+        <div className="w-24 pr-4 flex flex-col justify-center items-end">
           <RoundButton type="submit">
-            <i className="far fa-save text-2xl"></i>
+            <i className="far fa-save text-xl"></i>
           </RoundButton>
-        </RightCell>
+        </div>
       </Card>
     </form>
   )
