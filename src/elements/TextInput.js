@@ -18,7 +18,7 @@ const TextInput = (props) => {
   const handleOnChange = (e) => {
     const newValue = e.target.value
     setData(newValue)
-    props.onDataChange(newValue)
+    props.onDataChange(name, newValue)
   }
 
   return (

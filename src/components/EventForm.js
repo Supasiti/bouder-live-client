@@ -1,35 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { PropTypes } from 'prop-types'
 import Select from '../elements/Select'
 import TextInput from '../elements/TextInput'
+import useUpdateState from '../hooks/useUpdateState'
 
 const statuses = ['pending', 'open', 'running', 'cancelled', 'ended']
 
 const EventForm = (props) => {
   const { eventId } = props
 
-  const [name, setName] = useState('')
-  const [location, setLocation] = useState('')
-  const [status, setStatus] = useState('pending')
+  const { data: event, setData: setEvent } = useUpdateState(props, 'event', {})
   const [error, setError] = useState(false)
-
-  // update the when event data changes
-  useEffect(() => {
-    setName(props.event.name)
-    setLocation(props.event.location)
-    setStatus(props.event.status)
-  }, [props.event])
 
   // handle user login submission - and go to the respective dashboard
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const newEventData = { name, location, status }
     try {
       const res = await fetch(`/api/events/${eventId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newEventData),
+        body: JSON.stringify(event),
       })
       if (!res.ok) {
         throw new Error('cannot update the event data')
@@ -41,18 +32,9 @@ const EventForm = (props) => {
   }
 
   // handle all the value changes
-  const handleNameChange = (newName) => {
-    setName(newName)
-    setError(false)
-  }
-
-  const handleLocationChange = (newLocation) => {
-    setLocation(newLocation)
-    setError(false)
-  }
-
-  const handleStatusChange = (newStatus) => {
-    setStatus(newStatus)
+  const handleValueChange = (key, newValue) => {
+    const newEvent = { ...event, [key]: newValue }
+    setEvent(newEvent)
     setError(false)
   }
 
@@ -63,23 +45,23 @@ const EventForm = (props) => {
         type="text"
         name="name"
         placeholder="Fun Bouldering Event"
-        onDataChange={handleNameChange}
+        onDataChange={handleValueChange}
         isError={error}
-        value={name}
+        value={event.name}
       />
       <TextInput
         type="text"
         name="location"
         placeholder="Your Bouldering Gym"
-        onDataChange={handleLocationChange}
+        onDataChange={handleValueChange}
         isError={error}
-        value={location}
+        value={event.location}
       />
       <Select
         options={statuses}
         name="status"
-        onDataChange={handleStatusChange}
-        value={status}
+        onDataChange={handleValueChange}
+        value={event.status}
       />
       <button type="submit" className="btn btn-primary w-full">
         Save
@@ -90,7 +72,6 @@ const EventForm = (props) => {
 
 EventForm.propTypes = {
   eventId: PropTypes.string.isRequired,
-  event: PropTypes.object.isRequired,
 }
 
 export default EventForm

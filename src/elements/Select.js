@@ -17,7 +17,7 @@ const Select = (props) => {
   const handleSelectChange = (e) => {
     const newData = e.target.value
     setData(newData)
-    props.onDataChange(newData)
+    props.onDataChange(name, newData)
   }
 
   return (
