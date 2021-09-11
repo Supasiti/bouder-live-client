@@ -5,9 +5,13 @@ import Card from '../elements/Card'
 import LeftCell from '../elements/LeftCell'
 import RoundButton from '../elements/RoundButton'
 
+const defaultCategory = {
+  name: '',
+}
+
 const CategoryForm = (props) => {
   const { eventId } = props
-  const [category, setCategory] = useState(null)
+  const [category, setCategory] = useState({})
   const [error, setError] = useState(false)
 
   // handle all the value changes
@@ -31,7 +35,9 @@ const CategoryForm = (props) => {
       if (!res.ok) {
         throw new Error('fail to save new category')
       }
-      window.location.reload()
+      const newCategory = await res.json()
+      props.onSave(newCategory) // this is faster than rerender the whole page
+      setCategory(defaultCategory)
     } catch (err) {
       setError(true)
     }
@@ -47,6 +53,7 @@ const CategoryForm = (props) => {
             name="name"
             idName="category-name"
             label="name"
+            value={category.name}
             placeholder="Category Name"
             onDataChange={handleValueChange}
             isError={error}
@@ -64,5 +71,6 @@ const CategoryForm = (props) => {
 
 CategoryForm.propTypes = {
   eventId: PropTypes.string.isRequired,
+  onSave: PropTypes.func.isRequired,
 }
 export default CategoryForm

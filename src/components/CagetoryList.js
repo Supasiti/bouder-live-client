@@ -14,7 +14,12 @@ const CategoryList = (props) => {
   // handle when a category is deleted
   const handleDelete = (categoryId) => {
     const newCategories = categories.filter((c) => c.id !== categoryId)
-    console.log(newCategories)
+    setCategories(newCategories)
+  }
+
+  // handle when a category is added
+  const handleSave = (newCategory) => {
+    const newCategories = [...categories, newCategory]
     setCategories(newCategories)
   }
 
@@ -33,7 +38,7 @@ const CategoryList = (props) => {
           ))}
       </div>
 
-      <CategoryForm eventId={eventId} />
+      <CategoryForm eventId={eventId} onSave={handleSave} />
     </div>
   )
 }
