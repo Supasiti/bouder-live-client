@@ -1,16 +1,25 @@
 import { PropTypes } from 'prop-types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import utils from '../utils/string'
 
 const Select = (props) => {
-  const { name, options, value } = props
-  const [data, setData] = useState(value)
+  const { name, options } = props
+  const [data, setData] = useState('')
 
+  // looking to update every time props.value changes
+  useEffect(() => {
+    if (props.value) {
+      setData(props.value)
+    }
+  }, [props.value])
+
+  // handle when an option is selected
   const handleSelectChange = (e) => {
     const newData = e.target.value
     setData(newData)
     props.onDataChange(newData)
   }
+
   return (
     <div className="w-full">
       {/* label */}
@@ -47,7 +56,7 @@ const Select = (props) => {
 Select.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onDataChange: PropTypes.func.isRequired,
 }
 export default Select

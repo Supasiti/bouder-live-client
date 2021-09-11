@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PropTypes } from 'prop-types'
 import Select from '../elements/Select'
 import TextInput from '../elements/TextInput'
@@ -6,19 +6,18 @@ import TextInput from '../elements/TextInput'
 const statuses = ['pending', 'open', 'running', 'cancelled', 'ended']
 
 const EventForm = (props) => {
-  const { eventId, event } = props
-  const defaultEvent = {
-    name: '',
-    location: '',
-    status: 'pending',
-  }
-  const eventData = event || defaultEvent
+  const { eventId } = props
 
-  console.log(eventData.status)
-  const [name, setName] = useState(eventData.name)
-  const [location, setLocation] = useState(eventData.location)
-  const [status, setStatus] = useState(eventData.status)
+  const [name, setName] = useState('')
+  const [location, setLocation] = useState('')
+  const [status, setStatus] = useState('pending')
   const [error, setError] = useState(false)
+
+  useEffect(() => {
+    setName(props.event.name)
+    setLocation(props.event.location)
+    setStatus(props.event.status)
+  }, [props.event])
 
   // handle user login submission - and go to the respective dashboard
   const handleSubmit = async (e) => {

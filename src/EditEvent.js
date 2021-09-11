@@ -7,7 +7,6 @@ const EditEvent = () => {
   const { eventId } = useParams()
   const { data: eventData } = useFetch(`/api/events/${eventId}`)
 
-  console.log(eventData)
   return (
     <div className="p-4">
       <h2 className="text-center text-5xl text-yellow-600 mt-2 mb-6">
@@ -15,7 +14,10 @@ const EditEvent = () => {
       </h2>
       <div className="w-96 m-auto">
         <Card color="grayLight" extraClasses="p-4">
-          <EventForm eventId={eventId} event={eventData || {}} />
+          <EventForm
+            eventId={eventId}
+            event={(eventData && eventData.event) || {}}
+          />
         </Card>
       </div>
     </div>
