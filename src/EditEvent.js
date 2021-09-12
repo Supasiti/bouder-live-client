@@ -4,6 +4,7 @@ import Card from './elements/Card'
 import Container from './elements/Container'
 import useFetch from './hooks/useFetch'
 import CategoryList from './components/CagetoryList'
+import ProblemList from './components/ProblemList'
 
 const EditEvent = () => {
   const { eventId } = useParams()
@@ -19,15 +20,24 @@ const EditEvent = () => {
         Your Event : {eventId}
       </h2>
       <div className="w-96 m-auto mb-4">
-        <Card color="grayLight" extraClasses="p-4">
+        <Card color="greyLight" extraClasses="p-4">
           <EventForm eventId={eventId} event={eventData && eventData.event} />
         </Card>
       </div>
 
       <div className="w-full m-auto mb-4">
-        <Card color="grayLight" extraClasses="p-4">
+        <Card color="greyLight" extraClasses="p-4">
           <CategoryList
             categories={eventData && eventData.categories}
+            eventId={eventId}
+          />
+        </Card>
+      </div>
+
+      <div className="w-full m-auto mb-4">
+        <Card color="greyLight" extraClasses="p-4">
+          <ProblemList
+            problems={eventData && eventData.problems}
             eventId={eventId}
           />
         </Card>

@@ -1,11 +1,11 @@
 import { PropTypes } from 'prop-types'
-import useUpdateState from '../hooks/useUpdateState'
+import usePropState from '../hooks/usePropState'
 import CategoryCard from '../elements/CategoryCard'
 import CategoryForm from './CategoryForm'
 
 const CategoryList = (props) => {
   const { eventId } = props
-  const { data: categories, setData: setCategories } = useUpdateState(
+  const { data: categories, setData: setCategories } = usePropState(
     props,
     'categories',
     [],

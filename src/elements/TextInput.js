@@ -1,10 +1,10 @@
 import { PropTypes } from 'prop-types'
-import useUpdateState from '../hooks/useUpdateState'
+import usePropState from '../hooks/usePropState'
 import utils from '../utils/string'
 
 const TextInput = (props) => {
   const { type, name, placeholder, isError, label, idName } = props
-  const { data, setData } = useUpdateState(props, 'value', '')
+  const { data, setData } = usePropState(props, 'value', '')
   const borderColor = isError ? 'border-red-400' : 'border-gray-400'
 
   // handle when input changes

@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { PropTypes } from 'prop-types'
 import Select from '../elements/Select'
 import TextInput from '../elements/TextInput'
-import useUpdateState from '../hooks/useUpdateState'
+import usePropState from '../hooks/usePropState'
 
 const statuses = ['pending', 'open', 'running', 'cancelled', 'ended']
 
 const EventForm = (props) => {
   const { eventId } = props
-  const { data: event, setData: setEvent } = useUpdateState(props, 'event', {})
+  const { data: event, setData: setEvent } = usePropState(props, 'event', {})
   const [error, setError] = useState(false)
 
   // handle user login submission - and go to the respective dashboard

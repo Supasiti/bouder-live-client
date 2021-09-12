@@ -1,10 +1,10 @@
 import { PropTypes } from 'prop-types'
-import useUpdateState from '../hooks/useUpdateState'
+import usePropState from '../hooks/usePropState'
 import utils from '../utils/string'
 
 const Select = (props) => {
   const { name, options, label } = props
-  const { data, setData } = useUpdateState(props, 'value', '')
+  const { data, setData } = usePropState(props, 'value', '')
 
   // handle when an option is selected
   const handleSelectChange = (e) => {

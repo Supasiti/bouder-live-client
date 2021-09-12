@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 
 // custom hook that keep track with props being updated
 // return [data, getData]
-const useUpdateState = (props, key, defaultValue) => {
+const usePropState = (props, key, defaultValue) => {
   const [data, setData] = useState(defaultValue)
 
   // update the when data changes
   useEffect(() => {
-    if (props[key]) {
+    if (props[key] !== undefined) {
       setData(props[key])
     }
   }, [props[key]])
@@ -15,4 +15,4 @@ const useUpdateState = (props, key, defaultValue) => {
   return { data, setData }
 }
 
-export default useUpdateState
+export default usePropState

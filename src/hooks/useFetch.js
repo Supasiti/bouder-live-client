@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react'
 // custom hook that use a fetch promise
 // return  {data, isLoading, error}
 const useFetch = (url) => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,7 +14,7 @@ const useFetch = (url) => {
         if (res.ok) {
           const newData = await res.json()
           setData(newData)
-          setError(null)
+          setError('')
           return
         }
         throw new Error('Cannot fetch the requested data')
