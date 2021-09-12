@@ -4,7 +4,7 @@ import LeftCell from './LeftCell'
 import RoundButton from './RoundButton'
 
 const ProblemCard = (props) => {
-  const { name, id } = props
+  const { name, id, index } = props
 
   // when a delete button is clicked
   const handleRemoveProblem = async (e) => {
@@ -19,7 +19,7 @@ const ProblemCard = (props) => {
   return (
     <Card color="grayLight" extraClasses="flex justify-between items-stretch">
       <LeftCell width="w-12">
-        <p className="font-bold text-right">{id}</p>
+        <p className="font-bold text-right">{index}</p>
       </LeftCell>
       <div className="w-1/2 flex-grow p-4">{name}</div>
       <div className="w-24 pr-4 flex justify-end items-center">
@@ -32,6 +32,7 @@ const ProblemCard = (props) => {
 }
 
 ProblemCard.propTypes = {
+  index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,

@@ -28,8 +28,9 @@ const CategoryList = (props) => {
       <h3 className="text-lg text-center font-bold mb-4">Event Categories</h3>
       <div className="space-y-3 mb-3">
         {categories &&
-          categories.map((c) => (
+          categories.map((c, index) => (
             <CategoryCard
+              index={index + 1}
               id={c.id}
               key={c.id}
               name={c.name}

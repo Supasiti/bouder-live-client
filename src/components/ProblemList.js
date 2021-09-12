@@ -28,8 +28,9 @@ const ProblemList = (props) => {
       <h3 className="text-lg text-center font-bold mb-4">Event Problems</h3>
       <div className="space-y-3 mb-3">
         {problems &&
-          problems.map((p) => (
+          problems.map((p, index) => (
             <ProblemCard
+              index={index + 1}
               id={p.id}
               key={p.id}
               name={p.name}
