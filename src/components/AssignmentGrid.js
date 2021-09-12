@@ -1,29 +1,55 @@
+import { PropTypes } from 'prop-types'
+import RoundButton from '../elements/RoundButton'
 import usePropState from '../hooks/usePropState'
 import AssignmentRow from './AssignmentRow'
 
 const AssignmentGrid = (props) => {
-  const { data: categories } = usePropState(props, 'categories', [])
+  const { eventId } = props
   const { data: problems } = usePropState(props, 'problems', [])
+  const { data: categories } = usePropState(props, 'categories', [])
   const { data: assignments, setData: setAssignments } = usePropState(
     props,
     'assignments',
     [],
   )
 
-  // console.log(problems)
-  // console.log(categories)
-  console.log(assignments)
+  // handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
+    const newData = {
+      eventId,
+      problemAssignments: assignments,
+    }
+    try {
+      const res = await fetch(`/api/assignments`, {
+        method: 'PUT',
+        body: JSON.stringify(newData),
+        headers: { 'Content-Type': 'application/json' },
+      })
+      if (!res.ok) {
+        throw new Error('fail to save problem assignments')
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  // update when assignment values changes
   const handleAssignmentsChange = (newAssignments) => {
     setAssignments(newAssignments)
   }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="">
         {/* header */}
         <div className="flex justify-center space-x-1 mb-1">
-          <div className="w-32 h-32"></div>
+          <div className="w-32 h-32 flex justify-center items-center">
+            <RoundButton type="submit">
+              <i className="far fa-save text-xl"></i>
+            </RoundButton>
+          </div>
           {categories &&
             categories.map((c) => (
               <div
@@ -57,5 +83,7 @@ const AssignmentGrid = (props) => {
     </form>
   )
 }
-
+AssignmentGrid.propTypes = {
+  eventId: PropTypes.string.isRequired,
+}
 export default AssignmentGrid
