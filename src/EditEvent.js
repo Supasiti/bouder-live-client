@@ -9,23 +9,33 @@ import AssignmentGrid from './components/AssignmentGrid'
 
 const EditEvent = () => {
   const { eventId } = useParams()
-  const { data: eventData } = useFetch(`/api/events/${eventId}`)
+  const { data: eventData, setData: setEventData } = useFetch(
+    `/api/events/${eventId}`,
+    {},
+  )
 
-  //
-  //
-  //  Need to arrange elements
-  //
+  // update all data
+  const handleEventChange = (key, newValue) => {
+    if (key in eventData) {
+      const newEventData = { ...eventData, [key]: newValue }
+      setEventData(newEventData)
+    }
+  }
   return (
     <Container>
       <div className="flex flex-wrap content-evenly items-start">
-        <div className="w-full md:w-1/2 p-2">
+        <div className="w-full p-2">
           <h2 className="text-center text-5xl text-yellow-600 mt-2 mb-6">
-            Your Event : {eventId}
+            Your Event
           </h2>
         </div>
-        <div className="w-full md:w-1/2 p-2">
+        <div className="w-full p-2">
           <Card color="greyLight" extraClasses="p-4">
-            <EventForm eventId={eventId} event={eventData && eventData.event} />
+            <EventForm
+              eventId={eventId}
+              event={eventData && eventData.event}
+              onUpdate={handleEventChange}
+            />
           </Card>
         </div>
         <div className="w-full md:w-1/2 p-2">
@@ -33,6 +43,7 @@ const EditEvent = () => {
             <CategoryList
               categories={eventData && eventData.categories}
               eventId={eventId}
+              onUpdate={handleEventChange}
             />
           </Card>
         </div>
@@ -41,6 +52,7 @@ const EditEvent = () => {
             <ProblemList
               problems={eventData && eventData.problems}
               eventId={eventId}
+              onUpdate={handleEventChange}
             />
           </Card>
         </div>
@@ -51,6 +63,7 @@ const EditEvent = () => {
               categories={eventData && eventData.categories}
               assignments={eventData && eventData.assignments}
               eventId={eventId}
+              onUpdate={handleEventChange}
             />
           </Card>
         </div>

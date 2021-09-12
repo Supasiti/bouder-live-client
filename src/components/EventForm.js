@@ -15,6 +15,7 @@ const EventForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    props.onUpdate('event', event)
     try {
       const res = await fetch(`/api/events/${eventId}`, {
         method: 'PUT',
@@ -40,42 +41,53 @@ const EventForm = (props) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <h3 className="text-lg text-center font-bold">Event Description</h3>
-      <TextInput
-        type="text"
-        name="name"
-        idName="name"
-        label="name"
-        placeholder="Fun Bouldering Event"
-        onDataChange={handleValueChange}
-        isError={error}
-        value={event.name}
-      />
-      <TextInput
-        type="text"
-        name="location"
-        idName="location"
-        label="location"
-        placeholder="Your Bouldering Gym"
-        onDataChange={handleValueChange}
-        isError={error}
-        value={event.location}
-      />
-      <Select
-        options={statuses}
-        name="status"
-        label="status"
-        onDataChange={handleValueChange}
-        value={event.status}
-      />
-      <button type="submit" className="btn btn-primary w-full">
-        Save
-      </button>
+      <div className="flex flex-wrap items-end">
+        <div className="w-full md:w-1/3 p-2">
+          <TextInput
+            type="text"
+            name="name"
+            idName="name"
+            label="name"
+            placeholder="Fun Bouldering Event"
+            onDataChange={handleValueChange}
+            isError={error}
+            value={event.name}
+          />
+        </div>
+        <div className="w-full md:w-1/3 p-2">
+          <TextInput
+            type="text"
+            name="location"
+            idName="location"
+            label="location"
+            placeholder="Your Bouldering Gym"
+            onDataChange={handleValueChange}
+            isError={error}
+            value={event.location}
+          />
+        </div>
+        <div className="w-full md:w-1/6 p-2">
+          <Select
+            options={statuses}
+            name="status"
+            label="status"
+            onDataChange={handleValueChange}
+            value={event.status}
+          />
+        </div>
+        <div className="w-full md:w-1/6 p-2">
+          <button type="submit" className="btn btn-primary w-full">
+            <i className="far fa-save text-xl"></i>
+          </button>
+        </div>
+      </div>
     </form>
   )
 }
 
 EventForm.propTypes = {
   eventId: PropTypes.string.isRequired,
+  onUpdate: PropTypes.func,
 }
 
 export default EventForm

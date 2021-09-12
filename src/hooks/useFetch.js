@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 
 // custom hook that use a fetch promise
 // return  {data, isLoading, error}
-const useFetch = (url) => {
-  const [data, setData] = useState({})
+const useFetch = (url, defaultData) => {
+  const [data, setData] = useState(defaultData)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -28,7 +28,7 @@ const useFetch = (url) => {
     fetchData()
   }, [url])
 
-  return { data, isLoading, error }
+  return { data, setData, isLoading, error }
 }
 
 export default useFetch

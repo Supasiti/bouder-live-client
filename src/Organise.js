@@ -11,7 +11,7 @@ const Organise = () => {
     data: events,
     isLoading,
     error,
-  } = useFetch(`api/events?organised_by=${userId}`)
+  } = useFetch(`api/events?organised_by=${userId}`, [])
 
   useEffect(() => {
     setUser(savedUser)
@@ -27,22 +27,19 @@ const Organise = () => {
       {error && <p>{error}</p>}
       <EventTable
         title="Your Running Events"
-        events={(events && events.filter((e) => e.status === 'running')) || []}
+        events={events && events.filter((e) => e.status === 'running')}
       />
       <EventTable
         title="Your Future Events"
         events={
-          (events &&
-            events.filter((e) => ['open', 'pending'].includes(e.status))) ||
-          []
+          events && events.filter((e) => ['open', 'pending'].includes(e.status))
         }
       />
       <EventTable
         title="Your Past Events"
         events={
-          (events &&
-            events.filter((e) => ['cancelled', 'ended'].includes(e.status))) ||
-          []
+          events &&
+          events.filter((e) => ['cancelled', 'ended'].includes(e.status))
         }
       />
     </Container>

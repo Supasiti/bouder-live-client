@@ -15,12 +15,14 @@ const ProblemList = (props) => {
   const handleDelete = (problemId) => {
     const newProblems = problems.filter((c) => c.id !== problemId)
     setProblems(newProblems)
+    props.onUpdate('problems', newProblems)
   }
 
   // handle when a category is added
   const handleSave = (newProblem) => {
     const newProblems = [...problems, newProblem]
     setProblems(newProblems)
+    props.onUpdate('problems', newProblems)
   }
 
   return (
@@ -45,5 +47,6 @@ const ProblemList = (props) => {
 }
 ProblemList.propTypes = {
   eventId: PropTypes.string.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 }
 export default ProblemList

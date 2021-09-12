@@ -17,6 +17,7 @@ const AssignmentGrid = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    props.onUpdate('assignments', assignments)
     const newData = {
       eventId,
       problemAssignments: assignments,
@@ -85,5 +86,6 @@ const AssignmentGrid = (props) => {
 }
 AssignmentGrid.propTypes = {
   eventId: PropTypes.string.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 }
 export default AssignmentGrid

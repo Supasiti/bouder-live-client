@@ -15,12 +15,14 @@ const CategoryList = (props) => {
   const handleDelete = (categoryId) => {
     const newCategories = categories.filter((c) => c.id !== categoryId)
     setCategories(newCategories)
+    props.onUpdate('categories', newCategories)
   }
 
   // handle when a category is added
   const handleSave = (newCategory) => {
     const newCategories = [...categories, newCategory]
     setCategories(newCategories)
+    props.onUpdate('categories', newCategories)
   }
 
   return (
@@ -45,5 +47,6 @@ const CategoryList = (props) => {
 }
 CategoryList.propTypes = {
   eventId: PropTypes.string.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 }
 export default CategoryList
