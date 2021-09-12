@@ -10,7 +10,7 @@ const AssignmentCheckbox = (props) => {
   )
 
   const handleChanged = (e) => {
-    const newChecked = e.target.value
+    const newChecked = e.target.checked
     setChecked(newChecked)
     props.onChange(newChecked, problemId, categoryId)
   }

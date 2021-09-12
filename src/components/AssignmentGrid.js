@@ -4,11 +4,19 @@ import AssignmentRow from './AssignmentRow'
 const AssignmentGrid = (props) => {
   const { data: categories } = usePropState(props, 'categories', [])
   const { data: problems } = usePropState(props, 'problems', [])
-  const { data: assignments } = usePropState(props, 'assignments', [])
+  const { data: assignments, setData: setAssignments } = usePropState(
+    props,
+    'assignments',
+    [],
+  )
 
   // console.log(problems)
   // console.log(categories)
   console.log(assignments)
+
+  const handleAssignmentsChange = (newAssignments) => {
+    setAssignments(newAssignments)
+  }
 
   return (
     <form>
@@ -41,6 +49,7 @@ const AssignmentGrid = (props) => {
                 problem={p}
                 categories={categories}
                 assignments={assignments}
+                onAssignmentsChange={handleAssignmentsChange}
               />
             ))}
         </div>

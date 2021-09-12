@@ -6,35 +6,48 @@ const isInAssignment = (problemId, categoryId, assignments) => {
   const result = assignments.find(
     (a) => a.problemId === problemId && a.categoryId === categoryId,
   )
-  console.log(!!result)
   return !!result
 }
 
 const AssignmentRow = (props) => {
   const { problem, categories } = props
-  const { data: assignments, serData: setAssignments } = usePropState(
+  const { data: assignments, setData: setAssignments } = usePropState(
     props,
     'assignments',
     [],
   )
 
-  console.log(assignments)
+  // will add new assignment if not already in
+  const pushIfNotExist = (problemId, categoryId) => {
+    const assignment = assignments.find(
+      (a) => a.problemId === problemId && a.categoryId === categoryId,
+    )
+    if (!assignment) {
+      const newValue = { problemId, categoryId }
+      const result = [...assignments, newValue]
+      setAssignments(result)
+      return result
+    }
+    return assignments
+  }
+
+  // will filter out an assignment
+  const filterOut = (problemId, categoryId) => {
+    const result = assignments.filter(
+      (a) => a.problemId !== problemId || a.categoryId !== categoryId,
+    )
+    setAssignments(result)
+    return result
+  }
 
   // handle when a checkbox is ticked
   const handleValueChange = (isChecked, problemId, categoryId) => {
     if (isChecked) {
-      const assignment = assignments.find(
-        (a) => a.problemId === problemId && a.categoryId === categoryId,
-      )
-      if (!assignment) {
-        const newAssignment = [...assignment, { problemId, categoryId }]
-        setAssignments(newAssignment)
-      }
+      const newAssignments = pushIfNotExist(problemId, categoryId)
+      props.onAssignmentsChange(newAssignments)
     } else {
-      const newAssignment = assignments.filter(
-        (a) => a.problemId !== problemId || a.categoryId !== categoryId,
-      )
-      setAssignments(newAssignment)
+      const newAssignments = filterOut(problemId, categoryId)
+      props.onAssignmentsChange(newAssignments)
     }
   }
 
@@ -60,5 +73,6 @@ const AssignmentRow = (props) => {
 AssignmentRow.propTypes = {
   problem: PropTypes.object.isRequired,
   categories: PropTypes.array.isRequired,
+  onAssignmentsChange: PropTypes.func.isRequired,
 }
 export default AssignmentRow
