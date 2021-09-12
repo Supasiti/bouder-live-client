@@ -8,7 +8,7 @@ const AssignmentGrid = (props) => {
 
   // console.log(problems)
   // console.log(categories)
-  // console.log(assignments)
+  console.log(assignments)
 
   return (
     <form>

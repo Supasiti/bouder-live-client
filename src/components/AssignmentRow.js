@@ -1,4 +1,5 @@
 import { PropTypes } from 'prop-types'
+import AssignmentCheckbox from '../elements/AssignmentCheckbox'
 import usePropState from '../hooks/usePropState'
 
 const isInAssignment = (problemId, categoryId, assignments) => {
@@ -8,9 +9,34 @@ const isInAssignment = (problemId, categoryId, assignments) => {
   console.log(!!result)
   return !!result
 }
+
 const AssignmentRow = (props) => {
   const { problem, categories } = props
-  const { data: assignments } = usePropState(props, 'assignment', [])
+  const { data: assignments, serData: setAssignments } = usePropState(
+    props,
+    'assignments',
+    [],
+  )
+
+  console.log(assignments)
+
+  // handle when a checkbox is ticked
+  const handleValueChange = (isChecked, problemId, categoryId) => {
+    if (isChecked) {
+      const assignment = assignments.find(
+        (a) => a.problemId === problemId && a.categoryId === categoryId,
+      )
+      if (!assignment) {
+        const newAssignment = [...assignment, { problemId, categoryId }]
+        setAssignments(newAssignment)
+      }
+    } else {
+      const newAssignment = assignments.filter(
+        (a) => a.problemId !== problemId || a.categoryId !== categoryId,
+      )
+      setAssignments(newAssignment)
+    }
+  }
 
   return (
     <div className="flex space-x-1">
@@ -20,13 +46,11 @@ const AssignmentRow = (props) => {
       </div>
       {categories &&
         categories.map((category) => (
-          <input
+          <AssignmentCheckbox
             key={`${category.id}-${problem.id}`}
-            type="checkbox"
-            className="w-8 h-8 border-gray-400 border-2 border-opacity-75
-              text-yellow-500 rounded-md
-              focus:ring-yellow-500 focus:border-yellow-500
-              focus:text-yellow-500 focus-visible:text-yellow-500"
+            problemId={problem.id}
+            categoryId={category.id}
+            onChange={handleValueChange}
             checked={isInAssignment(problem.id, category.id, assignments)}
           />
         ))}
