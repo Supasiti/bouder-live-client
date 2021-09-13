@@ -24,6 +24,7 @@ const LoginForm = () => {
     if (response.ok) {
       const data = await response.json()
       localStorage.setItem('user', JSON.stringify(data.user))
+      localStorage.setItem('purpose', JSON.stringify(purpose))
       if (purpose === 'organise') {
         history.push(`/${purpose}`)
       }
