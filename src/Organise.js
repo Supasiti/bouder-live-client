@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import EventModal from './components/EventModel'
+import EventModal from './components/EventModal'
 import EventTable from './components/EventTable'
 import Container from './elements/Container'
 import useFetch from './hooks/useFetch'

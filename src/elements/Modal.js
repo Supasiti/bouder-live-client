@@ -25,7 +25,7 @@ const Modal = (props) => {
       >
         {/* modal card */}
         <div
-          className="relative w-full h-96 bg-gray-200 rounded-2xl shadow-2xl 
+          className="relative w-full bg-gray-200 rounded-2xl shadow-2xl 
         p-4 mx-auto"
         >
           {/* close button */}
