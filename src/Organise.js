@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import EventModal from './components/EventModel'
 import EventTable from './components/EventTable'
 import Container from './elements/Container'
 import useFetch from './hooks/useFetch'
@@ -16,6 +17,8 @@ const Organise = () => {
   useEffect(() => {
     setUser(savedUser)
   }, [])
+
+  const showEventModal = true
 
   return (
     <Container>
@@ -42,6 +45,8 @@ const Organise = () => {
           events.filter((e) => ['cancelled', 'ended'].includes(e.status))
         }
       />
+
+      <EventModal show={showEventModal} />
     </Container>
   )
 }
