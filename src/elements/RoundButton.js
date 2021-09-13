@@ -7,10 +7,11 @@ const acceptedTypes = ['button', 'submit', 'reset']
 const RoundButton = (props) => {
   const { type } = props
   const value = acceptedTypes.includes(type) ? type : 'button'
+  const size = 'size' in props ? props.size : 10
   return (
     <button
       type={value}
-      className="inline-block w-10 h-10 rounded-full btn-primary"
+      className={`inline-block w-${size} h-${size} rounded-full btn-primary`}
       onClick={props.onClick}
     >
       {props.children}
@@ -21,6 +22,7 @@ const RoundButton = (props) => {
 RoundButton.propTypes = {
   children: PropTypes.node,
   type: PropTypes.string,
+  size: PropTypes.number,
   onClick: PropTypes.func,
 }
 export default RoundButton

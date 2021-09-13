@@ -9,6 +9,7 @@ const Modal = (props) => {
   const handleCloseModal = (e) => {
     e.preventDefault()
     setShow(false)
+    props.onClose()
   }
 
   return (
@@ -43,5 +44,6 @@ const Modal = (props) => {
 
 Modal.propTypes = {
   children: PropTypes.node,
+  onClose: PropTypes.func,
 }
 export default Modal

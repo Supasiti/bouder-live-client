@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import EventModal from './components/EventModal'
 import EventTable from './components/EventTable'
 import Container from './elements/Container'
+import FixedButton from './elements/FixedButton'
 import useFetch from './hooks/useFetch'
 
 const Organise = () => {
   const [user, setUser] = useState(null)
+  const [showModal, setShowModal] = useState(false)
   const savedUser = JSON.parse(localStorage.getItem('user'))
   const userId = savedUser.id
   const {
@@ -18,7 +20,14 @@ const Organise = () => {
     setUser(savedUser)
   }, [])
 
-  const showEventModal = true
+  // opem-close modal
+  const handleOpenModal = (e) => {
+    e.preventDefault()
+    setShowModal(true)
+  }
+  const handleCloseModal = () => {
+    setShowModal(false)
+  }
 
   return (
     <Container>
@@ -46,7 +55,10 @@ const Organise = () => {
         }
       />
 
-      <EventModal show={showEventModal} />
+      <EventModal show={showModal} onClose={handleCloseModal} />
+      <FixedButton onClick={(e) => handleOpenModal(e, true)}>
+        <i className="fas fa-plus text-lg"></i>
+      </FixedButton>
     </Container>
   )
 }
