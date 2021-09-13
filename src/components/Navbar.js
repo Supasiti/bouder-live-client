@@ -56,19 +56,52 @@ const Navbar = (props) => {
       className={`${height} fixed top-0 left-0 right-0
     bg-gradient-to-b from-yellow-500 to-yellow-600`}
     >
-      <Container extraClasses="relative px-4 py-2">
+      <Container extraClasses="relative px-4 py-2 sm:py-4">
         <nav className="flex space-x-4 justify-between items-center">
-          <div className="flex flex-grow justify-center">
-            <h2 className="text-2xl text-gray-200 font-extralight">
+          <div className="flex flex-grow justify-center sm:justify-start sm:space-x-4 sm:items-end">
+            <h2
+              className="text-2xl text-gray-200 font-extralight
+              sm:text-3xl"
+            >
               <a href="/">Boulder Live</a>
             </h2>
+
+            {/* dashboard */}
+            {loggedIn && (
+              <button
+                type="button"
+                className="hidden sm:inline-block text-gray-200 mb-0.5"
+                onClick={handleGoToDashboard}
+              >
+                Dashboard
+              </button>
+            )}
+
+            {/* scoreboard */}
+            <a href="/" className="hidden sm:inline-block text-gray-200 mb-0.5">
+              Scoreboard
+            </a>
           </div>
+
+          {/* Only allow to log out when a user is logged in */}
+          {loggedIn && (
+            <div className="hidden sm:inline-block ">
+              <button
+                type="button"
+                className="text-gray-200"
+                onClick={handleLogOut}
+              >
+                Logout
+              </button>
+            </div>
+          )}
         </nav>
 
         {/* hamburger  */}
         <div
           className="absolute z-50 right-0 top-0 mt-3.5 mr-4 
-           text-gray-300"
+           text-gray-300 
+            sm:hidden"
         >
           <div className="flex justify-end text-xl mb-4">
             <button type="button" onClick={handletoggleMenu}>
@@ -102,7 +135,7 @@ const Navbar = (props) => {
                 className="btn btn-primary"
                 onClick={handleLogOut}
               >
-                Log Out
+                Logout
               </button>
             )}
           </div>

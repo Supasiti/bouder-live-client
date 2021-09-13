@@ -5,9 +5,9 @@ import Container from './elements/Container'
 
 const Home = () => (
   <div>
-    <Navbar height="h-12" />
+    <Navbar height="h-12 sm:h-16" />
     <main>
-      <Container extraClasses="p-4 pt-16">
+      <Container extraClasses="p-4 pt-16 sm:pt-20">
         <div className="flex flex-wrap justify-center">
           <div className="max-w-sm md:w-1/2">
             <Hero />
