@@ -3,7 +3,8 @@ import usePropState from '../hooks/usePropState'
 import utils from '../utils/string'
 
 const TextInput = (props) => {
-  const { type, name, placeholder, isError, label, idName } = props
+  const { type, name, placeholder, label, idName } = props
+  const isError = 'isError' in props ? props.isError : false
   const { data, setData } = usePropState(props, 'value', '')
   const borderColor = isError ? 'border-red-400' : 'border-gray-400'
 
@@ -46,7 +47,7 @@ TextInput.propTypes = {
   idName: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  isError: PropTypes.bool.isRequired,
+  isError: PropTypes.bool,
   onDataChange: PropTypes.func.isRequired,
 }
 export default TextInput
