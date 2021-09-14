@@ -4,7 +4,9 @@ const Radio = (props) => {
   const { value } = 'value' in props && props
   const { isChecked } = 'isChecked' in props && props
 
-  const handleClicked = (e) => props.onClick(e.target.value)
+  const handleClicked = (e) => {
+    props.onClick(name, e.target.value)
+  }
 
   return (
     <div className="flex items-center align-middle justify-center">

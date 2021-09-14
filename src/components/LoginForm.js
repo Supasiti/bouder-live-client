@@ -24,23 +24,27 @@ const LoginForm = () => {
     if (response.ok) {
       const data = await response.json()
       localStorage.setItem('user', JSON.stringify(data.user))
+      localStorage.setItem('purpose', JSON.stringify(purpose))
       if (purpose === 'organise') {
         history.push(`/${purpose}`)
       }
-      // need to write one tof
+      // need to write one for compete
     } else {
       setError(true)
     }
   }
 
   // handle all the value changes
-  const handleEmailChange = (newEmail) => setEmail(newEmail)
-  const handlePasswordChange = (newPassword) => {
-    setPassword(newPassword)
-    setError(false)
-  }
-  const handlePurposeClicked = (newPurpose) => {
-    setPurpose(newPurpose)
+  const handleDataChange = (key, newData) => {
+    if (key === 'email') {
+      setEmail(newData)
+    }
+    if (key === 'purpose') {
+      setPurpose(newData)
+    }
+    if (key === 'password') {
+      setPassword(newData)
+    }
     setError(false)
   }
 
@@ -50,15 +54,19 @@ const LoginForm = () => {
       <TextInput
         type="email"
         name="email"
+        idName="email"
+        label="email"
         placeholder="akiyo@email.com"
-        onDataChange={handleEmailChange}
+        onDataChange={handleDataChange}
         isError={error}
       />
       <TextInput
         type="password"
         name="password"
+        idName="password"
+        label="password"
         placeholder="password"
-        onDataChange={handlePasswordChange}
+        onDataChange={handleDataChange}
         isError={error}
       />
       <p
@@ -72,7 +80,7 @@ const LoginForm = () => {
           <Radio
             name="purpose"
             value="organise"
-            onClick={handlePurposeClicked}
+            onClick={handleDataChange}
             isChecked={purpose === 'organise'}
           />
         </div>
@@ -80,7 +88,7 @@ const LoginForm = () => {
           <Radio
             name="purpose"
             value="compete"
-            onClick={handlePurposeClicked}
+            onClick={handleDataChange}
             isChecked={purpose === 'compete'}
           />
         </div>

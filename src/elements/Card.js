@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import { PropTypes } from 'prop-types'
 
 const classList = {
   brand: 'bg-gradient-to-br from-yellow-500 to-yellow-600',
@@ -20,6 +20,11 @@ const Card = (props) => {
       {props.children}
     </div>
   )
+}
+
+Card.propTypes = {
+  children: PropTypes.node,
+  extraClasses: PropTypes.string,
 }
 
 export default Card

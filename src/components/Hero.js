@@ -1,15 +1,15 @@
 const Hero = () => (
-  <div className="px-4 py-6 mt-6 mx-auto">
+  <div className="mx-auto">
     {/*  title */}
-    <h1 className="text-5xl text-gray-800 font-extralight mb-4 lg:mt-10">
+    <h1 className="text-3xl text-gray-800 font-extralight mb-3 lg:mt-10">
       Boulder Live
     </h1>
 
     {/* subtitle */}
-    <h2 className="text-2xl text-gray-800 font-extrabold">
+    <h2 className="text-xl text-gray-800 font-extrabold">
       <span className="text-yellow-600">Organise</span> your climbing
     </h2>
-    <h2 className="text-2xl text-gray-800 font-extrabold mb-8">
+    <h2 className="text-xl text-gray-800 font-extrabold mb-6">
       <span className="text-yellow-600">competitions</span> with ease.
     </h2>
 
