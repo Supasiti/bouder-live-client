@@ -30,7 +30,7 @@ const Modal = (props) => {
         p-4 mx-auto"
         >
           {/* close button */}
-          <div className="absolute z-10 top-6 right-6">
+          <div className="absolute z-10 -top-2.5 -right-2.5">
             <RoundButton type="button" onClick={handleCloseModal}>
               <i className="fas fa-times text-lg"></i>
             </RoundButton>

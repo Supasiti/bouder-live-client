@@ -6,15 +6,24 @@ import useFetch from './hooks/useFetch'
 import Card from './elements/Card'
 import FixedButton from './elements/FixedButton'
 import FilterableEventTable from './components/FilterableEventTable'
+import Modal from './elements/Modal'
 
 const Compete = () => {
   const [user, setUser] = useState(null)
+  const [showModal, setShowModal] = useState(null)
   const savedUser = JSON.parse(localStorage.getItem('user'))
   const userId = savedUser.id
   const { data: events } = useFetch(`api/events?competed_by=${userId}`, [])
   useEffect(() => {
     setUser(savedUser)
   }, [])
+
+  const handleCloseModal = () => {
+    if (showModal) setShowModal(false)
+  }
+  const handleOpenModal = () => {
+    if (!showModal) setShowModal(true)
+  }
 
   return (
     <div>
@@ -23,7 +32,7 @@ const Compete = () => {
         <Container extraClasses="p-4 pt-16 sm:pt-20 relative lg:flex">
           {/* search button */}
           <div className="lg:hidden">
-            <FixedButton position="right-6 top-20">
+            <FixedButton position="right-6 top-20" onClick={handleOpenModal}>
               <i className="fas fa-search text-lg"></i>
             </FixedButton>
           </div>
@@ -59,11 +68,15 @@ const Compete = () => {
           </div>
 
           {/* side column */}
-          <div className="w-1/4 p-3">
+          <div className="hidden lg:inline-block w-1/4 p-3">
             <Card color="greyLight" extraClasses="p-4">
               <FilterableEventTable />
             </Card>
           </div>
+
+          <Modal show={showModal} onClose={handleCloseModal}>
+            <FilterableEventTable />
+          </Modal>
         </Container>
       </main>
     </div>
