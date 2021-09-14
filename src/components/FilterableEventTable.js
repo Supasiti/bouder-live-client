@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import EventSearchForm from './EventSearchForm'
 import useFetch from '../hooks/useFetch'
 import utils from '../utils/string'
@@ -7,6 +8,7 @@ import EventRow from '../elements/EventRow'
 const FilterableEventTable = () => {
   const { data: events } = useFetch('/api/events/running', [])
   const [filtered, setFiltered] = useState([])
+  const history = useHistory()
 
   // handle when search text change
   const handleInputChange = (input) => {
@@ -19,6 +21,7 @@ const FilterableEventTable = () => {
 
   const handleSelect = (eventId) => {
     console.log(eventId)
+    history.push(`/c/events/${eventId}`)
   }
 
   return (

@@ -12,8 +12,8 @@ const EventRow = (props) => {
 
   return (
     <div
-      className="w-full space-y-2 py-2"
-      onClick={() => {}}
+      className="w-full space-y-2 p-2"
+      onClick={handleClick}
       onKeyUp={handleClick}
       role="button"
       tabIndex="0"
