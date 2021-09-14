@@ -25,10 +25,7 @@ const LoginForm = () => {
       const data = await response.json()
       localStorage.setItem('user', JSON.stringify(data.user))
       localStorage.setItem('purpose', JSON.stringify(purpose))
-      if (purpose === 'organise') {
-        history.push(`/${purpose}`)
-      }
-      // need to write one for compete
+      history.push(`/${purpose}`)
     } else {
       setError(true)
     }

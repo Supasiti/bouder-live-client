@@ -20,7 +20,6 @@ const FilterableEventTable = () => {
   }
 
   const handleSelect = (eventId) => {
-    console.log(eventId)
     history.push(`/c/events/${eventId}`)
   }
 
