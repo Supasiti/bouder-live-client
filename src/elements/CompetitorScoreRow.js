@@ -1,4 +1,5 @@
-import usePropState from '../hooks/usePropState'
+import { PropTypes } from 'prop-types'
+import fetching from '../utils/fetch'
 import Card from './Card'
 import RoundButton from './RoundButton'
 import ScoreBox from './ScoreBox'
@@ -13,9 +14,17 @@ const defaultScore = {
 }
 
 const CompetitorScoreRow = (props) => {
-  const { data: score } = usePropState(props, 'score', defaultScore)
+  const score = 'score' in props ? props.score : defaultScore
   const colorTop = score.top ? 'bg-gray-400' : ''
   const colorBonus = score.bonus ? 'bg-gray-400' : ''
+
+  const handleAddTop = async (e) => {
+    e.preventDefault()
+    const res = await fetching.addTop(score.id)
+    if (res.ok && 'onScoreChanged' in props) {
+      props.onScoreChanged()
+    }
+  }
 
   return (
     <Card color="greyLighter" shadow={false} extraClasses="p-3">
@@ -66,7 +75,7 @@ const CompetitorScoreRow = (props) => {
         {/* add scores */}
 
         <div className="hidden sm:flex items-center justify-end space-x-1 col-span-2">
-          <RoundButton>+T</RoundButton>
+          <RoundButton onClick={handleAddTop}>+T</RoundButton>
           <RoundButton>+B</RoundButton>
           <RoundButton>+A</RoundButton>
         </div>
@@ -80,6 +89,10 @@ const CompetitorScoreRow = (props) => {
       </div>
     </Card>
   )
+}
+CompetitorScoreRow.propTypes = {
+  score: PropTypes.object,
+  onScoreChanged: PropTypes.func,
 }
 
 export default CompetitorScoreRow

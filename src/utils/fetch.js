@@ -14,6 +14,18 @@ const joinEvent = (eventId, userId) =>
     body: JSON.stringify({ userId }),
   })
 
-const fetching = { joinEvent, joinCategory }
+// add top
+const addTop = (scoreId) =>
+  fetch(`/api/scores/${scoreId}/addTop`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({}),
+  })
+
+const fetching = {
+  joinEvent,
+  joinCategory,
+  addTop,
+}
 
 export default fetching

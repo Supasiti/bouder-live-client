@@ -61,8 +61,8 @@ const JoinEvent = () => {
     getCompData()
   }, [])
 
-  // handle category change
-  const handleCategoryChanged = async () => {
+  // reload page
+  const reload = async () => {
     try {
       const newRes = await fetching.joinEvent(eventId, userId)
       if (newRes.ok) {
@@ -126,7 +126,7 @@ const JoinEvent = () => {
               <Card color="greyLight" extraClasses="p-3">
                 <AvailableCategoryList
                   categories={available}
-                  onCategoryChanged={handleCategoryChanged}
+                  onCategoryChanged={reload}
                 />
               </Card>
             </div>
@@ -136,7 +136,7 @@ const JoinEvent = () => {
           <Modal show={showModal} onClose={handleCloseModal}>
             <AvailableCategoryList
               categories={available}
-              onCategoryChanged={handleCategoryChanged}
+              onCategoryChanged={reload}
             />
           </Modal>
         </Container>
