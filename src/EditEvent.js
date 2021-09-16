@@ -28,10 +28,16 @@ const EditEvent = () => {
       <main>
         <Container extraClasses="p-4 pt-16 sm:pt-20">
           <div className="flex flex-wrap content-evenly items-start">
-            <div className="w-full p-2">
+            <div className="w-full flex justify-between items-center p-2">
               <h2 className="text-center text-5xl text-yellow-600 mt-2 mb-6">
                 Your Event
               </h2>
+              <a
+                href={`/events/${eventId}/scoreboard`}
+                className="btn btn-primary"
+              >
+                Scoreboard
+              </a>
             </div>
             <div className="w-full p-2">
               <Card color="greyLight" extraClasses="p-4">

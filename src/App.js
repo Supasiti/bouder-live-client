@@ -4,6 +4,7 @@ import Organise from './Organise'
 import EditEvent from './EditEvent'
 import Compete from './Compete'
 import JoinEvent from './JoinEvent'
+import Scoreboard from './Scoreboard'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/o/events/:eventId" component={EditEvent} />
           <Route path="/compete" component={Compete} />
           <Route path="/c/events/:eventId" component={JoinEvent} />
+          <Route path="/events/:eventId/scoreboard" component={Scoreboard} />
         </Switch>
       </div>
     </Router>

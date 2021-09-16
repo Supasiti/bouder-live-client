@@ -107,10 +107,10 @@ const JoinEvent = () => {
             </div>
 
             {/* main column */}
-            <div className="w-full md:w-2/3 lg:w-1/2 px-2 space-y-4 sm:space-y-0">
+            <div className="w-full md:w-2/3 lg:w-1/2 px-2 space-y-4 lg:space-y-0">
               <button
                 type="button"
-                className="btn btn-primary w-full sm:hidden"
+                className="btn btn-primary w-full lg:hidden"
                 onClick={handleOpenModal}
               >
                 Join a category
