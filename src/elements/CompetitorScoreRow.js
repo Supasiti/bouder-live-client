@@ -18,9 +18,11 @@ const CompetitorScoreRow = (props) => {
   const colorTop = score.top ? 'bg-gray-400' : ''
   const colorBonus = score.bonus ? 'bg-gray-400' : ''
 
-  const handleAddTop = async (e) => {
+  // when add button is pressed
+  const handleAdd = async (e, str) => {
     e.preventDefault()
-    const res = await fetching.addTop(score.id)
+
+    const res = await fetching.addToScore(score.id, str)
     if (res.ok && 'onScoreChanged' in props) {
       props.onScoreChanged()
     }
@@ -75,9 +77,9 @@ const CompetitorScoreRow = (props) => {
         {/* add scores */}
 
         <div className="hidden sm:flex items-center justify-end space-x-1 col-span-2">
-          <RoundButton onClick={handleAddTop}>+T</RoundButton>
-          <RoundButton>+B</RoundButton>
-          <RoundButton>+A</RoundButton>
+          <RoundButton onClick={(e) => handleAdd(e, 'top')}>+T</RoundButton>
+          <RoundButton onClick={(e) => handleAdd(e, 'bonus')}>+B</RoundButton>
+          <RoundButton onClick={(e) => handleAdd(e, 'attempt')}>+A</RoundButton>
         </div>
 
         <div

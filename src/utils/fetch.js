@@ -14,18 +14,21 @@ const joinEvent = (eventId, userId) =>
     body: JSON.stringify({ userId }),
   })
 
-// add top
-const addTop = (scoreId) =>
-  fetch(`/api/scores/${scoreId}/addTop`, {
+// add to score
+const addToScore = (scoreId, key) => {
+  const path = `add${key.toLowerCase()}`
+
+  return fetch(`/api/scores/${scoreId}/${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({}),
   })
+}
 
 const fetching = {
   joinEvent,
   joinCategory,
-  addTop,
+  addToScore,
 }
 
 export default fetching
