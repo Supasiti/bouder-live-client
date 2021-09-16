@@ -6,8 +6,10 @@ import CompCategoryList from './components/CompCategoryList'
 import CompetitorScoreList from './components/CompetitorScoreList'
 import AvailableCategoryList from './components/AvailableCategoryList'
 import Card from './elements/Card'
+import Modal from './elements/Modal'
 import Container from './elements/Container'
 import useFetch from './hooks/useFetch'
+import fetching from './utils/fetch'
 
 const availableCategories = (categories, compData) => {
   const result = categories.filter((c) => {
@@ -32,6 +34,7 @@ const yourCategories = (categories, compData) => {
 const JoinEvent = () => {
   const { eventId } = useParams()
   const [compData, setCompData] = useState({})
+  const [showModal, setShowModal] = useState(null)
   const { data: categories } = useFetch(
     `/api/categories?event_id=${eventId}`,
     [],
@@ -45,11 +48,7 @@ const JoinEvent = () => {
   // loading initial data
   useEffect(() => {
     const getCompData = async () => {
-      const res = await fetch(`/api/events/${eventId}/join`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId }),
-      })
+      const res = await fetching.joinEvent(eventId, userId)
       if (!res.ok) {
         history.go(-1)
       } else {
@@ -64,11 +63,24 @@ const JoinEvent = () => {
 
   // handle category change
   const handleCategoryChanged = async () => {
-    const res = await fetch(`/api/categories?event_id=${eventId}`)
-    if (res.ok) {
-      const data = await res.json()
-      setCompData(data)
+    try {
+      const newRes = await fetching.joinEvent(eventId, userId)
+      if (newRes.ok) {
+        const data = await newRes.json()
+        setCompData(data)
+        handleCloseModal()
+      }
+    } catch (err) {
+      console.error(err)
     }
+  }
+
+  // handle open modal for avaiable category
+  const handleCloseModal = () => {
+    if (showModal) setShowModal(false)
+  }
+  const handleOpenModal = () => {
+    if (!showModal) setShowModal(true)
   }
 
   return (
@@ -95,7 +107,15 @@ const JoinEvent = () => {
             </div>
 
             {/* main column */}
-            <div className="w-full md:w-2/3 lg:w-1/2 px-2">
+            <div className="w-full md:w-2/3 lg:w-1/2 px-2 space-y-4">
+              <button
+                type="button"
+                className="btn btn-primary w-full"
+                onClick={handleOpenModal}
+              >
+                Join a category
+              </button>
+
               <Card color="greyLight" extraClasses="p-3">
                 <CompetitorScoreList scores={compData && compData.scores} />
               </Card>
@@ -111,6 +131,14 @@ const JoinEvent = () => {
               </Card>
             </div>
           </div>
+
+          {/* modal for joining category */}
+          <Modal show={showModal} onClose={handleCloseModal}>
+            <AvailableCategoryList
+              categories={available}
+              onCategoryChanged={handleCategoryChanged}
+            />
+          </Modal>
         </Container>
       </main>
     </div>

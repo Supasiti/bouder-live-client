@@ -1,5 +1,6 @@
 import { PropTypes } from 'prop-types'
 import AvailableCategoryCard from '../elements/AvailableCategoryCard'
+import fetching from '../utils/fetch'
 
 const AvailableCategoryList = (props) => {
   const categories = 'categories' in props ? props.categories : []
@@ -10,13 +11,7 @@ const AvailableCategoryList = (props) => {
     if (!savedString) return
 
     const competitor = JSON.parse(savedString)
-    const data = { competitorId: competitor.id }
-
-    const res = await fetch(`/api/categories/${categoryId}/join`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
+    const res = await fetching.joinCategory(categoryId, competitor.id)
     if (res.ok && 'onCategoryChanged' in props) {
       props.onCategoryChanged()
     }
