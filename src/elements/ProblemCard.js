@@ -17,7 +17,11 @@ const ProblemCard = (props) => {
   }
 
   return (
-    <Card color="grayLight" extraClasses="flex justify-between items-stretch">
+    <Card
+      color="greyLighter"
+      shadow={false}
+      extraClasses="flex justify-between items-stretch"
+    >
       <LeftCell width="w-12">
         <p className="font-bold text-right">{index}</p>
       </LeftCell>

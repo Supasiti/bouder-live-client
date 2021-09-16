@@ -18,15 +18,15 @@ const CompetitorScoreRow = (props) => {
   const colorBonus = score.bonus ? 'bg-gray-400' : ''
 
   return (
-    <Card color="greyLight" extraClasses="p-3">
+    <Card color="greyLighter" shadow={false} extraClasses="p-3">
       <div className="grid grid-cols-6 gap-2">
         {/* problem name */}
-        <div className="flex items-center col-span-4 md:col-span-1">
+        <div className="flex items-center col-span-4 sm:col-span-1">
           <p className="text-left text-yellow-500">{score.problem.name}</p>
         </div>
 
         {/* Scores */}
-        <div className="flex flex-col items-center col-span-6 md:col-span-3">
+        <div className="flex flex-col items-center col-span-6 sm:col-span-3">
           <div className="flex space-x-1">
             <div className="w-8 text-center">T</div>
             <div className="w-8 text-center">B</div>
@@ -65,14 +65,14 @@ const CompetitorScoreRow = (props) => {
 
         {/* add scores */}
 
-        <div className="hidden md:flex items-center justify-end space-x-1 col-span-2">
+        <div className="hidden sm:flex items-center justify-end space-x-1 col-span-2">
           <RoundButton>+T</RoundButton>
           <RoundButton>+B</RoundButton>
           <RoundButton>+A</RoundButton>
         </div>
 
         <div
-          className="absolute md:hidden -top-1 -right-1 flex items-center justify-end space-x-1
+          className="absolute sm:hidden -top-1 -right-1 flex items-center justify-end space-x-1
           row-start-1 col-start-5 col-span-2"
         >
           <RoundButton>+</RoundButton>

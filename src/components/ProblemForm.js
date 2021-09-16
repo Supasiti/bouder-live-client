@@ -45,7 +45,11 @@ const ProblemForm = (props) => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <Card color="greyLight" extraClasses="flex justify-between items-stretch">
+      <Card
+        color="greyLighter"
+        shadow={false}
+        extraClasses="flex justify-between items-stretch"
+      >
         <LeftCell width="w-12" />
         <div className="w-1/2 px-4 py-2 flex-grow">
           <TextInput
