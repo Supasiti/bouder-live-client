@@ -134,19 +134,6 @@ const CompetitorScoreRow = (props) => {
           </div>
         </div>
       </div>
-
-      {/* add to score */}
-      {/* <Modal show={showModal}>
-        <button type="button" className="btn btn-primary">
-          Add Top
-        </button>
-        <button type="button" className="btn btn-primary">
-          Add Bonus
-        </button>
-        <button type="button" className="btn btn-primary">
-          Add Attempt
-        </button>
-      </Modal> */}
     </Card>
   )
 }
