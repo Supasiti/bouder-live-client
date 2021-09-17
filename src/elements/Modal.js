@@ -9,7 +9,9 @@ const Modal = (props) => {
   const handleCloseModal = (e) => {
     e.preventDefault()
     setShow(false)
-    props.onClose()
+    if ('onClose' in props) {
+      props.onClose()
+    }
   }
 
   return (

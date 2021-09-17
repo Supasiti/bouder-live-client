@@ -1,4 +1,5 @@
 import { PropTypes } from 'prop-types'
+import { useState } from 'react'
 import fetching from '../utils/fetch'
 import Card from './Card'
 import RoundButton from './RoundButton'
@@ -14,9 +15,12 @@ const defaultScore = {
 }
 
 const CompetitorScoreRow = (props) => {
+  const [showBtn, setShowBtn] = useState(false)
+  const [addBtnText, setBtnText] = useState(true)
   const score = 'score' in props ? props.score : defaultScore
   const colorTop = score.top ? 'bg-gray-400' : ''
   const colorBonus = score.bonus ? 'bg-gray-400' : ''
+  const showString = showBtn ? '' : 'hidden'
 
   // when add button is pressed
   const handleAdd = async (e, str) => {
@@ -25,6 +29,17 @@ const CompetitorScoreRow = (props) => {
     const res = await fetching.addToScore(score.id, str)
     if (res.ok && 'onScoreChanged' in props) {
       props.onScoreChanged()
+    }
+  }
+
+  const handleShowButton = (e) => {
+    e.preventDefault()
+    if (!showBtn) {
+      setShowBtn(true)
+      setBtnText(false)
+    } else {
+      setShowBtn(false)
+      setBtnText(true)
     }
   }
 
@@ -86,9 +101,52 @@ const CompetitorScoreRow = (props) => {
           className="absolute sm:hidden -top-1 -right-1 flex items-center justify-end space-x-1
           row-start-1 col-start-5 col-span-2"
         >
-          <RoundButton>+</RoundButton>
+          {/* open add to score buttons */}
+          <RoundButton onClick={handleShowButton}>
+            {(addBtnText && <i className="fas fa-plus"></i>) || (
+              <i className="fas fa-times"></i>
+            )}
+          </RoundButton>
+
+          {/* hidden buttons */}
+          <div className={`space-x-2 ${showString}`}>
+            <button
+              type="button"
+              className="btn btn-primary text-xs px-3 py-2"
+              onClick={(e) => handleAdd(e, 'top')}
+            >
+              Top
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary text-xs px-3 py-2"
+              onClick={(e) => handleAdd(e, 'bonus')}
+            >
+              Bonus
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary text-xs px-3 py-2"
+              onClick={(e) => handleAdd(e, 'attempt')}
+            >
+              Attempt
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* add to score */}
+      {/* <Modal show={showModal}>
+        <button type="button" className="btn btn-primary">
+          Add Top
+        </button>
+        <button type="button" className="btn btn-primary">
+          Add Bonus
+        </button>
+        <button type="button" className="btn btn-primary">
+          Add Attempt
+        </button>
+      </Modal> */}
     </Card>
   )
 }
