@@ -20,11 +20,11 @@ const AssignmentGrid = (props) => {
     props.onUpdate('assignments', assignments)
     const newData = {
       eventId,
-      problemAssignments: assignments,
+      assignments,
     }
     try {
-      const res = await fetch(`/api/assignments`, {
-        method: 'PUT',
+      const res = await fetch(`/api/categories/assign`, {
+        method: 'POST',
         body: JSON.stringify(newData),
         headers: { 'Content-Type': 'application/json' },
       })

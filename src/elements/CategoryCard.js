@@ -38,7 +38,7 @@ const CategoryCard = (props) => {
 CategoryCard.propTypes = {
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
 }
 export default CategoryCard

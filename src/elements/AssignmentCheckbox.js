@@ -28,8 +28,8 @@ const AssignmentCheckbox = (props) => {
   )
 }
 AssignmentCheckbox.propTypes = {
-  problemId: PropTypes.number.isRequired,
-  categoryId: PropTypes.number.isRequired,
+  problemId: PropTypes.string.isRequired,
+  categoryId: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 }
 export default AssignmentCheckbox

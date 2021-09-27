@@ -8,12 +8,26 @@ import Card from './elements/Card'
 import Container from './elements/Container'
 import useFetch from './hooks/useFetch'
 
+const getAssignments = (eventData) => {
+  const categories = eventData.categories || []
+
+  const result = categories.reduce((acc, cat) => {
+    const newValues = cat.problems.map((p) => ({
+      categoryId: cat.id,
+      problemId: p.id,
+    }))
+    return [...acc, ...newValues]
+  }, [])
+  return result
+}
+
 const EditEvent = () => {
   const { eventId } = useParams()
   const { data: eventData, setData: setEventData } = useFetch(
     `/api/events/${eventId}`,
     {},
   )
+  const assignments = getAssignments(eventData)
 
   // update all data
   const handleEventChange = (key, newValue) => {
@@ -71,7 +85,7 @@ const EditEvent = () => {
                 <AssignmentGrid
                   problems={eventData && eventData.problems}
                   categories={eventData && eventData.categories}
-                  assignments={eventData && eventData.assignments}
+                  assignments={eventData && assignments}
                   eventId={eventId}
                   onUpdate={handleEventChange}
                 />
