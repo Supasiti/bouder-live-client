@@ -6,10 +6,11 @@ import Container from './elements/Container'
 import FixedButton from './elements/FixedButton'
 import useFetch from './hooks/useFetch'
 import useLocalStorage from './hooks/useLocalStorage'
+import useModal from './hooks/useModal'
 
 const Organise = () => {
   const [user, setUser] = useState(null)
-  const [showModal, setShowModal] = useState(false)
+  const { openModal, closeModal, isShowing } = useModal(false)
   const { data: savedUser } = useLocalStorage('user', {})
   const {
     data: events,
@@ -20,15 +21,6 @@ const Organise = () => {
   useEffect(() => {
     setUser(savedUser)
   }, [])
-
-  // opem-close modal
-  const handleOpenModal = (e) => {
-    e.preventDefault()
-    setShowModal(true)
-  }
-  const handleCloseModal = () => {
-    setShowModal(false)
-  }
 
   return (
     <div>
@@ -64,11 +56,8 @@ const Organise = () => {
             link="/o/events/"
           />
 
-          <EventModal show={showModal} onClose={handleCloseModal} />
-          <FixedButton
-            position="bottom-12 right-12"
-            onClick={(e) => handleOpenModal(e, true)}
-          >
+          <EventModal show={isShowing} onClose={closeModal} />
+          <FixedButton position="bottom-12 right-12" onClick={openModal}>
             <i className="fas fa-plus text-lg"></i>
           </FixedButton>
         </Container>

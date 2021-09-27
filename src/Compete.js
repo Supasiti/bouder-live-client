@@ -9,22 +9,16 @@ import FixedButton from './elements/FixedButton'
 
 import useFetch from './hooks/useFetch'
 import useLocalStorage from './hooks/useLocalStorage'
+import useModal from './hooks/useModal'
 
 const Compete = () => {
   const [user, setUser] = useState(null)
-  const [showModal, setShowModal] = useState(null)
+  const { openModal, closeModal, isShowing } = useModal(false)
   const { data: savedUser } = useLocalStorage('user', {})
   const { data: events } = useFetch(`api/events?competedBy=${savedUser.id}`, [])
   useEffect(() => {
     setUser(savedUser)
   }, [])
-
-  const handleCloseModal = () => {
-    if (showModal) setShowModal(false)
-  }
-  const handleOpenModal = () => {
-    if (!showModal) setShowModal(true)
-  }
 
   return (
     <div>
@@ -33,7 +27,7 @@ const Compete = () => {
         <Container extraClasses="p-4 pt-16 sm:pt-20 relative lg:flex">
           {/* search button */}
           <div className="lg:hidden">
-            <FixedButton position="right-6 top-20" onClick={handleOpenModal}>
+            <FixedButton position="right-6 top-20" onClick={openModal}>
               <i className="fas fa-search text-lg"></i>
             </FixedButton>
           </div>
@@ -75,7 +69,7 @@ const Compete = () => {
             </Card>
           </div>
 
-          <Modal show={showModal} onClose={handleCloseModal}>
+          <Modal show={isShowing} onClose={closeModal}>
             <FilterableEventTable />
           </Modal>
         </Container>

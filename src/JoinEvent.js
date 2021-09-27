@@ -11,6 +11,7 @@ import Container from './elements/Container'
 import useFetch from './hooks/useFetch'
 import fetching from './utils/fetch'
 import useLocalStorage from './hooks/useLocalStorage'
+import useModal from './hooks/useModal'
 
 const availableCategories = (categories, compData) => {
   const result = categories.filter((c) => {
@@ -25,7 +26,7 @@ const availableCategories = (categories, compData) => {
 const JoinEvent = () => {
   const { eventId } = useParams()
   const [compData, setCompData] = useState({})
-  const [showModal, setShowModal] = useState(null)
+  const { openModal, closeModal, isShowing } = useModal(false)
   const { data: categories } = useFetch(`/api/categories?event=${eventId}`, [])
   const { data: savedUser } = useLocalStorage('user', {})
   const { setData: saveCompetitor } = useLocalStorage('competitor', {})
@@ -57,19 +58,11 @@ const JoinEvent = () => {
       if (newRes.ok) {
         const data = await newRes.json()
         setCompData(data)
-        handleCloseModal()
+        closeModal()
       }
     } catch (err) {
       console.error(err)
     }
-  }
-
-  // handle open modal for avaiable category
-  const handleCloseModal = () => {
-    if (showModal) setShowModal(false)
-  }
-  const handleOpenModal = () => {
-    if (!showModal) setShowModal(true)
   }
 
   return (
@@ -100,7 +93,7 @@ const JoinEvent = () => {
               <button
                 type="button"
                 className="btn btn-primary w-full lg:hidden"
-                onClick={handleOpenModal}
+                onClick={openModal}
               >
                 Join a category
               </button>
@@ -122,7 +115,7 @@ const JoinEvent = () => {
           </div>
 
           {/* modal for joining category */}
-          <Modal show={showModal} onClose={handleCloseModal}>
+          <Modal show={isShowing} onClose={closeModal}>
             <AvailableCategoryList
               categories={available}
               onCategoryChanged={reload}
