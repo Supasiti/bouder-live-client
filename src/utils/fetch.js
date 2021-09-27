@@ -1,10 +1,18 @@
 //  join category
-const joinCategory = (categoryId, competitorId) =>
-  fetch(`/api/categories/${categoryId}/join`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ competitorId }),
-  })
+const joinCategory = async (categoryId, competitorId) => {
+  let res
+  try {
+    res = await fetch(`/api/categories/${categoryId}/join`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ competitorId }),
+    })
+  } catch (err) {
+    console.error(err)
+  }
+  const data = await res.json()
+  return data
+}
 
 // join event
 const joinEvent = (eventId, userId) =>
@@ -25,10 +33,10 @@ const addToScore = (scoreId, key) => {
   })
 }
 
-const fetching = {
+const api = {
   joinEvent,
   joinCategory,
   addToScore,
 }
 
-export default fetching
+export default api

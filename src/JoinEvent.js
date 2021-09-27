@@ -9,7 +9,7 @@ import Card from './elements/Card'
 import Modal from './elements/Modal'
 import Container from './elements/Container'
 import useFetch from './hooks/useFetch'
-import fetching from './utils/fetch'
+import api from './utils/fetch'
 import useLocalStorage from './hooks/useLocalStorage'
 import useModal from './hooks/useModal'
 
@@ -38,7 +38,7 @@ const JoinEvent = () => {
   // loading initial data
   useEffect(() => {
     const getCompData = async () => {
-      const res = await fetching.joinEvent(eventId, savedUser.id)
+      const res = await api.joinEvent(eventId, savedUser.id)
       if (!res.ok) {
         history.go(-1)
       } else {
@@ -54,7 +54,7 @@ const JoinEvent = () => {
   // reload page
   const reload = async () => {
     try {
-      const newRes = await fetching.joinEvent(eventId, savedUser.id)
+      const newRes = await api.joinEvent(eventId, savedUser.id)
       if (newRes.ok) {
         const data = await newRes.json()
         setCompData(data)

@@ -1,6 +1,6 @@
 import { PropTypes } from 'prop-types'
 import { useState } from 'react'
-import fetching from '../utils/fetch'
+import api from '../utils/fetch'
 import Card from './Card'
 import RoundButton from './RoundButton'
 import ScoreBox from './ScoreBox'
@@ -26,7 +26,7 @@ const CompetitorScoreRow = (props) => {
   const handleAdd = async (e, str) => {
     e.preventDefault()
 
-    const res = await fetching.addToScore(score.id, str)
+    const res = await api.addToScore(score.id, str)
     if (res.ok && 'onScoreChanged' in props) {
       props.onScoreChanged()
     }
