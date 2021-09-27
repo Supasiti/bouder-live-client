@@ -40,8 +40,8 @@ const Navbar = (props) => {
   // logout
   const handleLogOut = (e) => {
     e.preventDefault()
-    const savedUser = JSON.parse(localStorage.getItem('user'))
-    const purpose = JSON.parse(localStorage.getItem('purpose'))
+    const savedUser = localStorage.getItem('user')
+    const purpose = localStorage.getItem('purpose')
     if (savedUser) {
       localStorage.setItem('user', '')
     }
@@ -53,7 +53,7 @@ const Navbar = (props) => {
 
   return (
     <header
-      className={`${height} fixed top-0 left-0 right-0
+      className={`${height} fixed z-50 top-0 left-0 right-0
     bg-gradient-to-b from-yellow-500 to-yellow-600`}
     >
       <Container extraClasses="relative px-4 py-2 sm:py-4">

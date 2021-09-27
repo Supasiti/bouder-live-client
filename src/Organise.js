@@ -35,6 +35,7 @@ const Organise = () => {
       <Navbar height="h-12 sm:h-16" />
       <main>
         <Container extraClasses="p-4 pt-16 sm:pt-20">
+          {/* header */}
           <p className="text-center text-xl font-bold mt-8">Welcome back,</p>
           <h2 className="text-center text-5xl text-yellow-600 mt-2 mb-6">
             {user && user.username}
@@ -44,6 +45,7 @@ const Organise = () => {
           <EventTable
             title="Your Running Events"
             events={events && events.filter((e) => e.status === 'running')}
+            link="/o/events/"
           />
           <EventTable
             title="Your Future Events"
@@ -51,6 +53,7 @@ const Organise = () => {
               events &&
               events.filter((e) => ['open', 'pending'].includes(e.status))
             }
+            link="/o/events/"
           />
           <EventTable
             title="Your Past Events"
@@ -58,10 +61,14 @@ const Organise = () => {
               events &&
               events.filter((e) => ['cancelled', 'ended'].includes(e.status))
             }
+            link="/o/events/"
           />
 
           <EventModal show={showModal} onClose={handleCloseModal} />
-          <FixedButton onClick={(e) => handleOpenModal(e, true)}>
+          <FixedButton
+            position="bottom-12 right-12"
+            onClick={(e) => handleOpenModal(e, true)}
+          >
             <i className="fas fa-plus text-lg"></i>
           </FixedButton>
         </Container>
