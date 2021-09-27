@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Radio from '../elements/Radio'
 import TextInput from '../elements/TextInput'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [purpose, setPurpose] = useState('compete')
   const [error, setError] = useState(false)
+  const { setData: saveUser } = useLocalStorage('user', {})
+  const { setData: savePurpose } = useLocalStorage('purpose', '')
   const history = useHistory()
 
   // handle user login submission - and go to the respective dashboard
@@ -23,8 +26,8 @@ const LoginForm = () => {
 
     if (response.ok) {
       const data = await response.json()
-      localStorage.setItem('user', JSON.stringify(data.user))
-      localStorage.setItem('purpose', JSON.stringify(purpose))
+      saveUser(data.user)
+      savePurpose(purpose)
       history.push(`/${purpose}`)
     } else {
       setError(true)

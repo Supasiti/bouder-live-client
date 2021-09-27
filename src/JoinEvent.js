@@ -10,6 +10,7 @@ import Modal from './elements/Modal'
 import Container from './elements/Container'
 import useFetch from './hooks/useFetch'
 import fetching from './utils/fetch'
+import useLocalStorage from './hooks/useLocalStorage'
 
 const availableCategories = (categories, compData) => {
   const result = categories.filter((c) => {
@@ -26,23 +27,22 @@ const JoinEvent = () => {
   const [compData, setCompData] = useState({})
   const [showModal, setShowModal] = useState(null)
   const { data: categories } = useFetch(`/api/categories?event=${eventId}`, [])
+  const { data: savedUser } = useLocalStorage('user', {})
+  const { setData: saveCompetitor } = useLocalStorage('competitor', {})
+  const history = useHistory()
 
   const available = availableCategories(categories, compData)
   const compCategories = 'categories' in compData ? compData.categories : []
 
-  const savedUser = JSON.parse(localStorage.getItem('user'))
-  const userId = savedUser.id
-  const history = useHistory()
-
   // loading initial data
   useEffect(() => {
     const getCompData = async () => {
-      const res = await fetching.joinEvent(eventId, userId)
+      const res = await fetching.joinEvent(eventId, savedUser.id)
       if (!res.ok) {
         history.go(-1)
       } else {
         const data = await res.json()
-        localStorage.setItem('competitor', JSON.stringify(data.competitor))
+        saveCompetitor(data.competitor)
         setCompData(data)
       }
     }
@@ -53,7 +53,7 @@ const JoinEvent = () => {
   // reload page
   const reload = async () => {
     try {
-      const newRes = await fetching.joinEvent(eventId, userId)
+      const newRes = await fetching.joinEvent(eventId, savedUser.id)
       if (newRes.ok) {
         const data = await newRes.json()
         setCompData(data)

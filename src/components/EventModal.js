@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types'
 import Modal from '../elements/Modal'
 import TextInput from '../elements/TextInput'
 import usePropState from '../hooks/usePropState'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const defaultEvent = {
   name: '',
@@ -13,13 +14,8 @@ const EventModal = (props) => {
   const { data: show } = usePropState(props, 'show', false)
   const [event, setEvent] = useState(defaultEvent)
   const [error, setError] = useState(false)
+  const { data: savedUser } = useLocalStorage('user', {})
   const history = useHistory()
-  let userId
-  try {
-    userId = JSON.parse(localStorage.getItem('user')).id
-  } catch (err) {
-    console.error(err)
-  }
 
   // handle value changed
   const handleValueChange = (key, newValue) => {
@@ -38,7 +34,7 @@ const EventModal = (props) => {
       const res = await fetch(`/api/events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...event, userId }),
+        body: JSON.stringify({ ...event, userId: savedUser.id }),
       })
       if (!res.ok) {
         throw new Error('cannot create the event')

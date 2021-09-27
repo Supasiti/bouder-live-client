@@ -6,14 +6,15 @@ import Card from './elements/Card'
 import Modal from './elements/Modal'
 import Container from './elements/Container'
 import FixedButton from './elements/FixedButton'
+
 import useFetch from './hooks/useFetch'
+import useLocalStorage from './hooks/useLocalStorage'
 
 const Compete = () => {
   const [user, setUser] = useState(null)
   const [showModal, setShowModal] = useState(null)
-  const savedUser = JSON.parse(localStorage.getItem('user'))
-  const userId = savedUser.id
-  const { data: events } = useFetch(`api/events?competedBy=${userId}`, [])
+  const { data: savedUser } = useLocalStorage('user', {})
+  const { data: events } = useFetch(`api/events?competedBy=${savedUser.id}`, [])
   useEffect(() => {
     setUser(savedUser)
   }, [])

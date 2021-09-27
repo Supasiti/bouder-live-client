@@ -5,17 +5,17 @@ import EventTable from './components/EventTable'
 import Container from './elements/Container'
 import FixedButton from './elements/FixedButton'
 import useFetch from './hooks/useFetch'
+import useLocalStorage from './hooks/useLocalStorage'
 
 const Organise = () => {
   const [user, setUser] = useState(null)
   const [showModal, setShowModal] = useState(false)
-  const savedUser = JSON.parse(localStorage.getItem('user'))
-  const userId = savedUser.id
+  const { data: savedUser } = useLocalStorage('user', {})
   const {
     data: events,
     isLoading,
     error,
-  } = useFetch(`api/events?organisedBy=${userId}`, [])
+  } = useFetch(`api/events?organisedBy=${savedUser.id}`, [])
 
   useEffect(() => {
     setUser(savedUser)

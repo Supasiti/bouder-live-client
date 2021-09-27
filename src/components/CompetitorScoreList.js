@@ -1,16 +1,12 @@
 import CompetitorScoreRow from '../elements/CompetitorScoreRow'
+import useLocalStorage from '../hooks/useLocalStorage'
 import usePropState from '../hooks/usePropState'
 
 const CompetitorScoreList = (props) => {
+  const { data: competitor } = useLocalStorage('competitor', {})
   const { data: scores, setData: setScores } = usePropState(props, 'scores', [])
 
   const handleScoreChanged = async () => {
-    const savedString = localStorage.getItem('competitor')
-    if (!savedString) return
-
-    const competitor = JSON.parse(savedString)
-
-    console.log(competitor.id)
     const res = await fetch(`/api/scores?competitor=${competitor.id}`)
     if (res.ok) {
       const data = await res.json()

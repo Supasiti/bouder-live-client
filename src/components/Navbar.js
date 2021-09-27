@@ -1,12 +1,19 @@
 import { PropTypes } from 'prop-types'
 import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import Container from '../elements/Container'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const Navbar = (props) => {
   const height = 'height' in props ? props.height : ''
   const [showMenu, setShowMenu] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
+  const { data: savedUser, setData: setUser } = useLocalStorage('user', {})
+  const { data: savedPurpose, setData: setPurpose } = useLocalStorage(
+    'purpose',
+    '',
+  )
+  const location = useLocation()
   const history = useHistory()
 
   const menuHeight = showMenu ? 'h-full' : 'h-0'
@@ -22,8 +29,7 @@ const Navbar = (props) => {
   }
 
   useEffect(() => {
-    const userString = localStorage.getItem('user')
-    if (!userString) {
+    if (!Object.keys(savedUser).length) {
       setLoggedIn(false)
     } else {
       setLoggedIn(true)
@@ -33,22 +39,24 @@ const Navbar = (props) => {
   // to go dashboard
   const handleGoToDashboard = (e) => {
     e.preventDefault()
-    const purpose = JSON.parse(localStorage.getItem('purpose'))
-    if (purpose) history.push(`/${purpose}`)
+    if (savedPurpose) history.push(`/${savedPurpose}`)
   }
 
   // logout
   const handleLogOut = (e) => {
     e.preventDefault()
-    const savedUser = localStorage.getItem('user')
-    const purpose = localStorage.getItem('purpose')
+
     if (savedUser) {
-      localStorage.setItem('user', '')
+      setUser({})
     }
-    if (purpose) {
-      localStorage.setItem('purpose', '')
+    if (savedPurpose) {
+      setPurpose('')
     }
-    history.push('/')
+    if (location.pathname === '/') {
+      window.location.reload()
+    } else {
+      history.push('/')
+    }
   }
 
   return (
