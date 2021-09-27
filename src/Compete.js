@@ -13,7 +13,7 @@ const Compete = () => {
   const [showModal, setShowModal] = useState(null)
   const savedUser = JSON.parse(localStorage.getItem('user'))
   const userId = savedUser.id
-  const { data: events } = useFetch(`api/events?competed_by=${userId}`, [])
+  const { data: events } = useFetch(`api/events?competedBy=${userId}`, [])
   useEffect(() => {
     setUser(savedUser)
   }, [])

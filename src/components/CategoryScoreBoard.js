@@ -4,7 +4,7 @@ import ScoreCard from '../elements/ScoreCard'
 
 const CategoryScoreBoard = (props) => {
   const category = 'category' in props ? props.category : {}
-  const totalScores = 'total_scores' in category ? category.total_scores : []
+  const totalScores = 'totalScores' in category ? category.totalScores : []
 
   return (
     <Card color="greyLight" extraClasses="p-2 sm:p-3">

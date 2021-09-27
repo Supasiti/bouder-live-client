@@ -9,7 +9,9 @@ const CompetitorScoreList = (props) => {
     if (!savedString) return
 
     const competitor = JSON.parse(savedString)
-    const res = await fetch(`/api/scores?competitor_id=${competitor.id}`)
+
+    console.log(competitor.id)
+    const res = await fetch(`/api/scores?competitor=${competitor.id}`)
     if (res.ok) {
       const data = await res.json()
       setScores(data)

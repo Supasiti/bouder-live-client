@@ -15,7 +15,7 @@ const Organise = () => {
     data: events,
     isLoading,
     error,
-  } = useFetch(`api/events?organised_by=${userId}`, [])
+  } = useFetch(`api/events?organisedBy=${userId}`, [])
 
   useEffect(() => {
     setUser(savedUser)

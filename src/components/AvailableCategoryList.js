@@ -9,7 +9,6 @@ const AvailableCategoryList = (props) => {
   const handleClick = async (categoryId) => {
     const savedString = localStorage.getItem('competitor')
     if (!savedString) return
-
     const competitor = JSON.parse(savedString)
     const res = await fetching.joinCategory(categoryId, competitor.id)
     if (res.ok && 'onCategoryChanged' in props) {

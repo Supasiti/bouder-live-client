@@ -43,6 +43,8 @@ const CompetitorScoreRow = (props) => {
     }
   }
 
+  // console.log(score.problem)
+
   return (
     <Card color="greyLighter" shadow={false} extraClasses="p-3">
       <div className="grid grid-cols-6 gap-2">

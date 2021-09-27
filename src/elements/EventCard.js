@@ -40,7 +40,7 @@ EventCard.propTypes = {
   name: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  eventId: PropTypes.number.isRequired,
+  eventId: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
 }
 export default EventCard

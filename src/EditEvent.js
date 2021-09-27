@@ -14,7 +14,7 @@ const getAssignments = (eventData) => {
   const result = categories.reduce((acc, cat) => {
     const newValues = cat.problems.map((p) => ({
       categoryId: cat.id,
-      problemId: p.id,
+      problemId: p,
     }))
     return [...acc, ...newValues]
   }, [])

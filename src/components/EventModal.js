@@ -14,6 +14,12 @@ const EventModal = (props) => {
   const [event, setEvent] = useState(defaultEvent)
   const [error, setError] = useState(false)
   const history = useHistory()
+  let userId
+  try {
+    userId = JSON.parse(localStorage.getItem('user')).id
+  } catch (err) {
+    console.error(err)
+  }
 
   // handle value changed
   const handleValueChange = (key, newValue) => {
@@ -32,7 +38,7 @@ const EventModal = (props) => {
       const res = await fetch(`/api/events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(event),
+        body: JSON.stringify({ ...event, userId }),
       })
       if (!res.ok) {
         throw new Error('cannot create the event')

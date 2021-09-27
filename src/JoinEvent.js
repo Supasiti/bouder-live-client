@@ -13,18 +13,8 @@ import fetching from './utils/fetch'
 
 const availableCategories = (categories, compData) => {
   const result = categories.filter((c) => {
-    if ('categoryIds' in compData) {
-      return !compData.categoryIds.includes(c.id)
-    }
-    return false
-  })
-  return result
-}
-
-const yourCategories = (categories, compData) => {
-  const result = categories.filter((c) => {
-    if ('categoryIds' in compData) {
-      return compData.categoryIds.includes(c.id)
+    if ('categories' in compData) {
+      return !compData.categories.map(({ id }) => id).includes(c.id)
     }
     return false
   })
@@ -35,12 +25,11 @@ const JoinEvent = () => {
   const { eventId } = useParams()
   const [compData, setCompData] = useState({})
   const [showModal, setShowModal] = useState(null)
-  const { data: categories } = useFetch(
-    `/api/categories?event_id=${eventId}`,
-    [],
-  )
+  const { data: categories } = useFetch(`/api/categories?event=${eventId}`, [])
+
   const available = availableCategories(categories, compData)
-  const compCategories = yourCategories(categories, compData)
+  const compCategories = 'categories' in compData ? compData.categories : []
+
   const savedUser = JSON.parse(localStorage.getItem('user'))
   const userId = savedUser.id
   const history = useHistory()
