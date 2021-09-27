@@ -8,7 +8,6 @@ const Scoreboard = () => {
   const { eventId } = useParams()
   const { data: categories } = useFetch(`/api/events/${eventId}/scoreboard`, [])
 
-  console.log(categories)
   return (
     <div>
       <Navbar height="h-12 sm:h-16" />
