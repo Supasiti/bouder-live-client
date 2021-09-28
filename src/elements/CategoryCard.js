@@ -1,19 +1,21 @@
 import { PropTypes } from 'prop-types'
+
 import Card from './Card'
 import LeftCell from './LeftCell'
 import RoundButton from './RoundButton'
+import api from '../utils/fetch'
+import useApi from '../hooks/useApi'
 
 const CategoryCard = (props) => {
   const { name, id, index } = props
+  const { callApi } = useApi(api.deleteCategory)
 
   // when a delete button is clicked
   const handleRemoveCategory = async (e) => {
     e.preventDefault()
 
-    fetch(`/api/categories/${id}`, {
-      method: 'DELETE',
-    })
-    props.onDelete(id)
+    const res = await callApi(id)
+    if (res) props.onDelete(id)
   }
 
   return (

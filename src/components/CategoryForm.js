@@ -4,6 +4,8 @@ import TextInput from '../elements/TextInput'
 import Card from '../elements/Card'
 import LeftCell from '../elements/LeftCell'
 import RoundButton from '../elements/RoundButton'
+import api from '../utils/fetch'
+import useApi from '../hooks/useApi'
 
 const defaultCategory = {
   name: '',
@@ -12,7 +14,7 @@ const defaultCategory = {
 const CategoryForm = (props) => {
   const { eventId } = props
   const [category, setCategory] = useState({})
-  const [error, setError] = useState(false)
+  const { callApi, error, setError } = useApi(api.createCategory)
 
   // handle all the value changes
   const handleValueChange = (key, newValue) => {
@@ -24,22 +26,12 @@ const CategoryForm = (props) => {
   // handle form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault()
-    try {
-      const categoryData = { ...category, eventId }
-      const res = await fetch('/api/categories', {
-        method: 'POST',
-        body: JSON.stringify(categoryData),
-        headers: { 'Content-Type': 'application/json' },
-      })
 
-      if (!res.ok) {
-        throw new Error('fail to save new category')
-      }
-      const newCategory = await res.json()
-      props.onSave(newCategory) // this is faster than rerender the whole page
+    const categoryData = { ...category, eventId }
+    const resData = await callApi(categoryData)
+    if (resData) {
+      props.onSave(resData) // this is faster than rerender the whole page
       setCategory(defaultCategory)
-    } catch (err) {
-      setError(true)
     }
   }
 
@@ -60,7 +52,7 @@ const CategoryForm = (props) => {
             value={category.name}
             placeholder="Category Name"
             onDataChange={handleValueChange}
-            isError={error}
+            isError={!!error}
           />
         </div>
         <div className="w-24 pr-4 flex flex-col justify-center items-end">

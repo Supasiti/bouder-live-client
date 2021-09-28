@@ -1,6 +1,8 @@
 import { PropTypes } from 'prop-types'
 import RoundButton from '../elements/RoundButton'
+import useApi from '../hooks/useApi'
 import usePropState from '../hooks/usePropState'
+import api from '../utils/fetch'
 import AssignmentRow from './AssignmentRow'
 
 const AssignmentGrid = (props) => {
@@ -12,28 +14,15 @@ const AssignmentGrid = (props) => {
     'assignments',
     [],
   )
+  const { callApi } = useApi(api.assignProblems)
 
   // handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     props.onUpdate('assignments', assignments)
-    const newData = {
-      eventId,
-      assignments,
-    }
-    try {
-      const res = await fetch(`/api/categories/assign`, {
-        method: 'POST',
-        body: JSON.stringify(newData),
-        headers: { 'Content-Type': 'application/json' },
-      })
-      if (!res.ok) {
-        throw new Error('fail to save problem assignments')
-      }
-    } catch (err) {
-      console.error(err)
-    }
+    const newData = { eventId, assignments }
+    await callApi(newData)
   }
 
   // update when assignment values changes

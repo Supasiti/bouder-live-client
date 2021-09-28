@@ -12,11 +12,10 @@ const Organise = () => {
   const [user, setUser] = useState(null)
   const { openModal, closeModal, isShowing } = useModal(false)
   const { data: savedUser } = useLocalStorage('user', {})
-  const {
-    data: events,
-    isLoading,
-    error,
-  } = useFetch(`api/events?organisedBy=${savedUser.id}`, [])
+  const { data: events } = useFetch(
+    `api/events?organisedBy=${savedUser.id}`,
+    [],
+  )
 
   useEffect(() => {
     setUser(savedUser)
@@ -32,8 +31,6 @@ const Organise = () => {
           <h2 className="text-center text-5xl text-yellow-600 mt-2 mb-6">
             {user && user.username}
           </h2>
-          {isLoading && <p>LOADING .... </p>}
-          {error && <p>{error}</p>}
           <EventTable
             title="Your Running Events"
             events={events && events.filter((e) => e.status === 'running')}

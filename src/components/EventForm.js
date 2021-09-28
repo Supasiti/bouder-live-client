@@ -1,41 +1,31 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import { PropTypes } from 'prop-types'
 import Select from '../elements/Select'
 import TextInput from '../elements/TextInput'
+import api from '../utils/fetch'
 import usePropState from '../hooks/usePropState'
+import useApi from '../hooks/useApi'
 
 const statuses = ['pending', 'open', 'running', 'cancelled', 'ended']
 
 const EventForm = (props) => {
   const { eventId } = props
   const { data: event, setData: setEvent } = usePropState(props, 'event', {})
-  const [error, setError] = useState(false)
+  const { callApi, error, setError } = useApi(api.updateEvent)
 
   // handle user login submission - and go to the respective dashboard
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     props.onUpdate('event', event)
-    try {
-      const res = await fetch(`/api/events/${eventId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(event),
-      })
-      if (!res.ok) {
-        throw new Error('cannot update the event data')
-      }
-      // need to some way to display that it has been updated
-    } catch (err) {
-      setError(true)
-    }
+    const data = { eventId, ...event }
+    await callApi(data)
   }
 
   // handle all the value changes
   const handleValueChange = (key, newValue) => {
     const newEvent = { ...event, [key]: newValue }
     setEvent(newEvent)
-    setError(false)
+    setError('')
   }
 
   return (
@@ -50,7 +40,7 @@ const EventForm = (props) => {
             label="name"
             placeholder="Fun Bouldering Event"
             onDataChange={handleValueChange}
-            isError={error}
+            isError={!!error}
             value={event.name}
           />
         </div>
@@ -62,7 +52,7 @@ const EventForm = (props) => {
             label="location"
             placeholder="Your Bouldering Gym"
             onDataChange={handleValueChange}
-            isError={error}
+            isError={!!error}
             value={event.location}
           />
         </div>

@@ -1,16 +1,19 @@
 import { PropTypes } from 'prop-types'
 import AvailableCategoryCard from '../elements/AvailableCategoryCard'
+import useApi from '../hooks/useApi'
 import useLocalStorage from '../hooks/useLocalStorage'
 import api from '../utils/fetch'
 
 const AvailableCategoryList = (props) => {
   const { data: competitor } = useLocalStorage('competitor', {})
+  const { callApi } = useApi(api.joinCategory)
   const categories = 'categories' in props ? props.categories : []
 
   // handle with a category is clicked
   const handleClick = async (categoryId) => {
-    await api.joinCategory(categoryId, competitor.id)
-    if ('onCategoryChanged' in props) {
+    const data = { categoryId, competitorId: competitor.id }
+    const resData = await callApi(data)
+    if (resData && 'onCategoryChanged' in props) {
       props.onCategoryChanged()
     }
   }

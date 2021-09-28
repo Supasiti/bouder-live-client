@@ -5,6 +5,8 @@ import Modal from '../elements/Modal'
 import TextInput from '../elements/TextInput'
 import usePropState from '../hooks/usePropState'
 import useLocalStorage from '../hooks/useLocalStorage'
+import api from '../utils/fetch'
+import useApi from '../hooks/useApi'
 
 const defaultEvent = {
   name: '',
@@ -13,9 +15,9 @@ const defaultEvent = {
 const EventModal = (props) => {
   const { data: show } = usePropState(props, 'show', false)
   const [event, setEvent] = useState(defaultEvent)
-  const [error, setError] = useState(false)
   const { data: savedUser } = useLocalStorage('user', {})
   const history = useHistory()
+  const { callApi, error, setError } = useApi(api.createEvent)
 
   // handle value changed
   const handleValueChange = (key, newValue) => {
@@ -30,20 +32,9 @@ const EventModal = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    try {
-      const res = await fetch(`/api/events`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...event, userId: savedUser.id }),
-      })
-      if (!res.ok) {
-        throw new Error('cannot create the event')
-      }
-      const data = await res.json()
-      history.push(`/o/events/${data.id}`)
-    } catch (err) {
-      setError(true)
-    }
+    const eventData = { ...event, userId: savedUser.id }
+    const resData = await callApi(eventData)
+    if (resData) history.push(`/o/events/${resData.id}`)
   }
 
   return (
@@ -59,7 +50,7 @@ const EventModal = (props) => {
               label="name"
               placeholder="Fun Bouldering Event"
               onDataChange={handleValueChange}
-              isError={error}
+              isError={!!error}
               value={event.name}
             />
             <TextInput
@@ -69,7 +60,7 @@ const EventModal = (props) => {
               label="location"
               placeholder="Your Bouldering Gym"
               onDataChange={handleValueChange}
-              isError={error}
+              isError={!!error}
               value={event.location}
             />
           </div>

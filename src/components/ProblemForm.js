@@ -4,6 +4,8 @@ import TextInput from '../elements/TextInput'
 import Card from '../elements/Card'
 import LeftCell from '../elements/LeftCell'
 import RoundButton from '../elements/RoundButton'
+import api from '../utils/fetch'
+import useApi from '../hooks/useApi'
 
 const defaultProblem = {
   name: '',
@@ -12,34 +14,25 @@ const defaultProblem = {
 const ProblemForm = (props) => {
   const { eventId } = props
   const [problem, setProblem] = useState({})
-  const [error, setError] = useState(false)
+  // const [error, setError] = useState(false)
+  const { callApi, error, setError } = useApi(api.createProblem)
 
   // handle all the value changes
   const handleValueChange = (key, newValue) => {
     const newProblem = { ...problem, [key]: newValue }
     setProblem(newProblem)
-    setError(false)
+    setError('')
   }
 
   // handle form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault()
-    try {
-      const problemData = { ...problem, eventId }
-      const res = await fetch('/api/problems', {
-        method: 'POST',
-        body: JSON.stringify(problemData),
-        headers: { 'Content-Type': 'application/json' },
-      })
 
-      if (!res.ok) {
-        throw new Error('fail to save new problem')
-      }
-      const newProblem = await res.json()
+    const problemData = { ...problem, eventId }
+    const newProblem = await callApi(problemData)
+    if (newProblem) {
       props.onSave(newProblem) // this is faster than rerender the whole page
-      setProblem(defaultProblem)
-    } catch (err) {
-      setError(true)
+      setProblem(defaultProblem) // clear form
     }
   }
 
@@ -60,7 +53,7 @@ const ProblemForm = (props) => {
             value={problem.name}
             placeholder="Problem Name"
             onDataChange={handleValueChange}
-            isError={error}
+            isError={!!error}
           />
         </div>
         <div className="w-24 pr-4 flex flex-col justify-center items-end">

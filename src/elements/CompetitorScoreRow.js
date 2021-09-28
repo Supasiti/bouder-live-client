@@ -4,6 +4,7 @@ import api from '../utils/fetch'
 import Card from './Card'
 import RoundButton from './RoundButton'
 import ScoreBox from './ScoreBox'
+import useApi from '../hooks/useApi'
 
 const defaultScore = {
   top: false,
@@ -17,17 +18,20 @@ const defaultScore = {
 const CompetitorScoreRow = (props) => {
   const [showBtn, setShowBtn] = useState(false)
   const [addBtnText, setBtnText] = useState(true)
+  const { callApi } = useApi(api.addToScore)
+
   const score = 'score' in props ? props.score : defaultScore
   const colorTop = score.top ? 'bg-gray-400' : ''
   const colorBonus = score.bonus ? 'bg-gray-400' : ''
   const showString = showBtn ? '' : 'hidden'
 
   // when add button is pressed
-  const handleAdd = async (e, str) => {
+  const handleAdd = async (e, key) => {
     e.preventDefault()
 
-    const res = await api.addToScore(score.id, str)
-    if (res.ok && 'onScoreChanged' in props) {
+    const data = { scoreId: score.id, key }
+    const res = await callApi(data)
+    if (res && 'onScoreChanged' in props) {
       props.onScoreChanged()
     }
   }

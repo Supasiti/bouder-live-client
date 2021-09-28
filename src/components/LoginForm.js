@@ -3,14 +3,16 @@ import { useHistory } from 'react-router-dom'
 import Radio from '../elements/Radio'
 import TextInput from '../elements/TextInput'
 import useLocalStorage from '../hooks/useLocalStorage'
+import api from '../utils/fetch'
+import useApi from '../hooks/useApi'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [purpose, setPurpose] = useState('compete')
-  const [error, setError] = useState(false)
   const { setData: saveUser } = useLocalStorage('user', {})
   const { setData: savePurpose } = useLocalStorage('purpose', '')
+  const { callApi, error, setError } = useApi(api.login)
   const history = useHistory()
 
   // handle user login submission - and go to the respective dashboard
@@ -18,19 +20,11 @@ const LoginForm = () => {
     event.preventDefault()
 
     const user = { email, password }
-    const response = await fetch('/api/users/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
-    })
-
-    if (response.ok) {
-      const data = await response.json()
-      saveUser(data.user)
+    const newUser = await callApi(user)
+    if (newUser) {
+      saveUser(newUser.user)
       savePurpose(purpose)
       history.push(`/${purpose}`)
-    } else {
-      setError(true)
     }
   }
 
@@ -45,7 +39,7 @@ const LoginForm = () => {
     if (key === 'password') {
       setPassword(newData)
     }
-    setError(false)
+    setError('')
   }
 
   return (
@@ -58,7 +52,7 @@ const LoginForm = () => {
         label="email"
         placeholder="akiyo@email.com"
         onDataChange={handleDataChange}
-        isError={error}
+        isError={!!error}
       />
       <TextInput
         type="password"
@@ -67,7 +61,7 @@ const LoginForm = () => {
         label="password"
         placeholder="password"
         onDataChange={handleDataChange}
-        isError={error}
+        isError={!!error}
       />
       <p
         className="w-full text-lg mb-3 text-center text-gray-700 
