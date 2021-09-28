@@ -6,6 +6,12 @@ import RoundButton from './RoundButton'
 import api from '../utils/fetch'
 import useApi from '../hooks/useApi'
 
+const cardStyle = {
+  color: 'greyLighter',
+  shadow: false,
+  extraClasses: 'flex justify-between items-stretch',
+}
+
 const CategoryCard = (props) => {
   const { name, id, index } = props
   const { callApi } = useApi(api.deleteCategory)
@@ -19,11 +25,7 @@ const CategoryCard = (props) => {
   }
 
   return (
-    <Card
-      color="greyLighter"
-      shadow={false}
-      extraClasses="flex justify-between items-stretch"
-    >
+    <Card {...cardStyle}>
       <LeftCell width="w-12">
         <p className="font-bold text-right">{index}</p>
       </LeftCell>

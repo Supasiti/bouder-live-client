@@ -2,11 +2,9 @@ import { PropTypes } from 'prop-types'
 
 const Container = (props) => {
   const extra = 'extraClasses' in props ? props.extraClasses : ''
-  return (
-    <div className={`w-full lg:max-w-5xl xl:max-w-7xl mx-auto ${extra}`}>
-      {props.children}
-    </div>
-  )
+  const classList = `w-full lg:max-w-5xl xl:max-w-7xl mx-auto ${extra}`
+
+  return <div className={classList}>{props.children}</div>
 }
 Container.propTypes = {
   children: PropTypes.node,

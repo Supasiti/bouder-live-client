@@ -2,6 +2,17 @@ import { PropTypes } from 'prop-types'
 import usePropState from '../hooks/usePropState'
 import utils from '../utils/string'
 
+const labelAttr = (name) => ({
+  id: `${name}-label`,
+  className: 'w-full mb-1 text-sm text-gray-800',
+  htmlFor: `${name}-select`,
+})
+
+const selectClass = `w-full rounded-lg p-2 shadow-md
+  border-2 border-opacity-75 text-gray-700
+  focus:border-gray-400 focus:ring-gray-400`
+
+// render select
 const Select = (props) => {
   const { name, options, label } = props
   const { data, setData } = usePropState(props, 'value', '')
@@ -16,21 +27,13 @@ const Select = (props) => {
   return (
     <div className="w-full">
       {/* label */}
-      <label
-        id={`${name}-label`}
-        className="w-full mb-1 text-sm text-gray-800"
-        htmlFor={`${name}-select`}
-      >
-        {utils.capitalize(label)}
-      </label>
+      <label {...labelAttr(name)}>{utils.capitalize(label)}</label>
 
       {/* select */}
       <select
         id={`${name}-select`}
         name={name}
-        className="w-full rounded-lg p-2 shadow-md
-          border-2 border-opacity-75 text-gray-700
-          focus:border-gray-400 focus:ring-gray-400"
+        className={selectClass}
         aria-label={name}
         aria-describedby={`${name}-label`}
         onChange={handleSelectChange}
