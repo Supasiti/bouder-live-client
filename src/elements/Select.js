@@ -2,13 +2,15 @@ import { PropTypes } from 'prop-types'
 import usePropState from '../hooks/usePropState'
 import utils from '../utils/string'
 
+// styling
 const labelAttr = (name) => ({
   id: `${name}-label`,
   className: 'w-full mb-1 text-sm text-gray-800',
   htmlFor: `${name}-select`,
 })
 
-const selectClass = `w-full rounded-lg p-2 shadow-md
+const selectStyle = `
+  w-full rounded-lg p-2 shadow-md
   border-2 border-opacity-75 text-gray-700
   focus:border-gray-400 focus:ring-gray-400`
 
@@ -33,7 +35,7 @@ const Select = (props) => {
       <select
         id={`${name}-select`}
         name={name}
-        className={selectClass}
+        className={selectStyle}
         aria-label={name}
         aria-describedby={`${name}-label`}
         onChange={handleSelectChange}

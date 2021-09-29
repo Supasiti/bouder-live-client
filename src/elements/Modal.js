@@ -2,9 +2,26 @@ import { PropTypes } from 'prop-types'
 import usePropState from '../hooks/usePropState'
 import RoundButton from './RoundButton'
 
+//  styling
+const blurBackground = (isShowing) => {
+  const showClass = isShowing ? 'block' : 'hidden'
+  return `
+    fixed top-0 left-0 w-full h-full z-50 bg-gray-500 
+    bg-opacity-50 backdrop-filter backdrop-blur-sm 
+    ${showClass}`
+}
+
+const centeringContainer = `
+  w-full max-w-md h-full py-10 px-6 mx-auto flex 
+  items-center`
+
+const modalCard = `
+  relative w-full bg-gray-200 rounded-2xl shadow-2xl 
+  p-4 mx-auto`
+
+//  rendering modal
 const Modal = (props) => {
   const { data: show, setData: setShow } = usePropState(props, 'show', false)
-  const showClass = show ? 'block' : 'hidden'
 
   const handleCloseModal = (e) => {
     e.preventDefault()
@@ -15,22 +32,9 @@ const Modal = (props) => {
   }
 
   return (
-    // blur background
-    <div
-      className={`fixed top-0 left-0 w-full h-full z-50 bg-gray-500 
-        bg-opacity-50 backdrop-filter backdrop-blur-sm 
-        ${showClass}`}
-    >
-      {/* centering content */}
-      <div
-        className="w-full max-w-md h-full py-10 px-6 mx-auto flex 
-        items-center"
-      >
-        {/* modal card */}
-        <div
-          className="relative w-full bg-gray-200 rounded-2xl shadow-2xl 
-        p-4 mx-auto"
-        >
+    <div className={blurBackground(show)}>
+      <div className={centeringContainer}>
+        <div className={modalCard}>
           {/* close button */}
           <div className="absolute z-10 -top-2.5 -right-2.5">
             <RoundButton type="button" onClick={handleCloseModal}>

@@ -1,8 +1,8 @@
 import { PropTypes } from 'prop-types'
 import Card from './Card'
 import Status from './Status'
+import AbsoluteDiv from './AbsoluteDiv'
 
-const statusDiv = `absolute -top-2.5 -right-2.5`
 const fontStyle = `text-yellow-600 text-lg font-bold`
 const container = `max-w-md mx-auto md:w-80 lg:w-64 lg:h-84 
   hover:-translate-y-1 transition transform`
@@ -35,9 +35,9 @@ const EventCard = (props) => {
           </div>
 
           {/* status */}
-          <div className={statusDiv}>
+          <AbsoluteDiv pos="-top-2.5 -right-2.5">
             <Status status={status} />
-          </div>
+          </AbsoluteDiv>
         </a>
       </Card>
     </div>

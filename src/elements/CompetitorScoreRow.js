@@ -15,14 +15,32 @@ const defaultScore = {
   problem: { name: '' },
 }
 
+const abbrevs = {
+  top: 'T',
+  bonus: 'B',
+  attemptTop: 'AT',
+  attemptBonus: 'AB',
+  attempts: 'A',
+}
+
+const getEntries = (score) => {
+  const entries = Object.entries(abbrevs)
+  const result = entries.reduce((acc, entry) => {
+    const [key, abbrev] = entry
+    const value = key in score ? score[key] : 0
+    return [...acc, { abbrev, value }]
+  }, [])
+  return result
+}
+
+// rendering
 const CompetitorScoreRow = (props) => {
   const [showBtn, setShowBtn] = useState(false)
   const [addBtnText, setBtnText] = useState(true)
   const { callApi } = useApi(api.addToScore)
 
   const score = 'score' in props ? props.score : defaultScore
-  const colorTop = score.top ? 'bg-gray-400' : ''
-  const colorBonus = score.bonus ? 'bg-gray-400' : ''
+  const entries = getEntries(score)
   const showString = showBtn ? '' : 'hidden'
 
   // when add button is pressed
@@ -47,8 +65,6 @@ const CompetitorScoreRow = (props) => {
     }
   }
 
-  // console.log(score.problem)
-
   return (
     <Card color="greyLighter" shadow={false} extraClasses="p-3">
       <div className="grid grid-cols-6 gap-2">
@@ -60,38 +76,12 @@ const CompetitorScoreRow = (props) => {
         {/* Scores */}
         <div className="flex flex-col items-center col-span-6 sm:col-span-3">
           <div className="flex space-x-1">
-            <div className="w-8 text-center">T</div>
-            <div className="w-8 text-center">B</div>
-            <div className="w-8 text-center">AT</div>
-            <div className="w-8 text-center">AB</div>
-            <div className="w-8 text-center">A</div>
-          </div>
-          <div className="flex space-x-1">
-            <ScoreBox color={colorTop}>
-              {score.top && (
-                <span
-                  className="flex-grow text-center text-gray-100 
-                fas fa-check text-lg"
-                ></span>
-              )}
-            </ScoreBox>
-            <ScoreBox color={colorBonus}>
-              {score.bonus && (
-                <span
-                  className="flex-grow text-center text-gray-100 
-                fas fa-check text-lg"
-                ></span>
-              )}
-            </ScoreBox>
-            <ScoreBox>
-              <p className="text-center">{score.attemptTop}</p>
-            </ScoreBox>
-            <ScoreBox>
-              <p className="text-center">{score.attemptBonus}</p>
-            </ScoreBox>
-            <ScoreBox>
-              <p className="text-center">{score.attempts}</p>
-            </ScoreBox>
+            {entries.map((entry) => (
+              <ScoreBox
+                key={Math.floor(Math.random() * 100000001)}
+                entry={entry}
+              />
+            ))}
           </div>
         </div>
 
