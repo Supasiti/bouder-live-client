@@ -1,10 +1,11 @@
 import { PropTypes } from 'prop-types'
-import { useState } from 'react'
 import api from '../utils/fetch'
 import Card from './Card'
 import RoundButton from './RoundButton'
 import ScoreBox from './ScoreBox'
+import HiddenDiv from './HiddenDiv'
 import useApi from '../hooks/useApi'
+import useToggle from '../hooks/useToggle'
 
 const defaultScore = {
   top: false,
@@ -33,15 +34,20 @@ const getEntries = (score) => {
   return result
 }
 
+const toggleBtnChild = (isShowing) => {
+  if (isShowing) {
+    return <i className="fas fa-times"></i>
+  }
+  return <i className="fas fa-plus"></i>
+}
+
 // rendering
 const CompetitorScoreRow = (props) => {
-  const [showBtn, setShowBtn] = useState(false)
-  const [addBtnText, setBtnText] = useState(true)
+  const { state: isShowingBtn, toggleState: toggleShowing } = useToggle(false)
   const { callApi } = useApi(api.addToScore)
 
   const score = 'score' in props ? props.score : defaultScore
   const entries = getEntries(score)
-  const showString = showBtn ? '' : 'hidden'
 
   // when add button is pressed
   const handleAdd = async (e, key) => {
@@ -51,17 +57,6 @@ const CompetitorScoreRow = (props) => {
     const res = await callApi(data)
     if (res && 'onScoreChanged' in props) {
       props.onScoreChanged()
-    }
-  }
-
-  const handleShowButton = (e) => {
-    e.preventDefault()
-    if (!showBtn) {
-      setShowBtn(true)
-      setBtnText(false)
-    } else {
-      setShowBtn(false)
-      setBtnText(true)
     }
   }
 
@@ -98,14 +93,12 @@ const CompetitorScoreRow = (props) => {
           row-start-1 col-start-5 col-span-2"
         >
           {/* open add to score buttons */}
-          <RoundButton onClick={handleShowButton}>
-            {(addBtnText && <i className="fas fa-plus"></i>) || (
-              <i className="fas fa-times"></i>
-            )}
+          <RoundButton onClick={toggleShowing}>
+            {toggleBtnChild(isShowingBtn)}
           </RoundButton>
 
           {/* hidden buttons */}
-          <div className={`space-x-2 ${showString}`}>
+          <HiddenDiv isShowing={isShowingBtn} extend="space-x-2">
             <button
               type="button"
               className="btn btn-primary text-xs px-3 py-2"
@@ -127,7 +120,7 @@ const CompetitorScoreRow = (props) => {
             >
               Attempt
             </button>
-          </div>
+          </HiddenDiv>
         </div>
       </div>
     </Card>
