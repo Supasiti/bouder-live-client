@@ -1,15 +1,12 @@
 import { PropTypes } from 'prop-types'
 import usePropState from '../hooks/usePropState'
 import RoundButton from './RoundButton'
+import HiddenDiv from './HiddenDiv'
 
 //  styling
-const blurBackground = (isShowing) => {
-  const showClass = isShowing ? 'block' : 'hidden'
-  return `
+const blurBackground = `
     fixed top-0 left-0 w-full h-full z-50 bg-gray-500 
-    bg-opacity-50 backdrop-filter backdrop-blur-sm 
-    ${showClass}`
-}
+    bg-opacity-50 backdrop-filter backdrop-blur-sm `
 
 const centeringContainer = `
   w-full max-w-md h-full py-10 px-6 mx-auto flex 
@@ -32,7 +29,7 @@ const Modal = (props) => {
   }
 
   return (
-    <div className={blurBackground(show)}>
+    <HiddenDiv isShowing={show} extend={blurBackground}>
       <div className={centeringContainer}>
         <div className={modalCard}>
           {/* close button */}
@@ -44,7 +41,7 @@ const Modal = (props) => {
           {props.children}
         </div>
       </div>
-    </div>
+    </HiddenDiv>
   )
 }
 

@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types'
 const HiddenDiv = (props) => {
   const { isShowing } = props
   const extend = 'extend' in props ? props.extend : ''
-  const style = `${isShowing ? '' : 'hidden'} ${extend}`
+  const style = `${isShowing ? 'block' : 'hidden'} ${extend}`
 
   return <div className={style}>{props.children}</div>
 }
